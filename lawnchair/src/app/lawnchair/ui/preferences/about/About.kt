@@ -55,6 +55,7 @@ private enum class Role(val descriptionResId: Int) {
     QuickSwitchMaintenance(descriptionResId = R.string.quickswitch_maintenance),
     Support(descriptionResId = R.string.support),
     SupportAndPr(descriptionResId = R.string.support_and_pr),
+    Awesomeness(descriptionResId = R.string.awesomeness)
 }
 
 private data class TeamMember(
@@ -68,6 +69,15 @@ private data class Link(
     @DrawableRes val iconResId: Int,
     @StringRes val labelResId: Int,
     val url: String,
+)
+
+private val swag = listOf(
+    TeamMember(
+        name = "Kane O'Riley",
+        role = Role.Awesomeness,
+        photoUrl = "https://avatars.githubusercontent.com/u/6470279",
+        socialUrl = "https://linktr.ee/kaneoriley",
+    )
 )
 
 private val product = listOf(
@@ -230,6 +240,10 @@ fun About() {
                 style = MaterialTheme.typography.titleLarge,
             )
             Text(
+                text = stringResource(id = R.string.original_app_credit),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            Text(
                 text = BuildConfig.VERSION_DISPLAY_NAME,
                 style = MaterialTheme.typography.bodyLarge,
                 color = LocalContentColor.current.copy(alpha = ContentAlpha.medium),
@@ -257,7 +271,17 @@ fun About() {
                 }
             }
         }
-        PreferenceGroup(heading = stringResource(id = R.string.product)) {
+        PreferenceGroup(heading = stringResource(id = R.string.derived_app_name)) {
+            swag.forEach {
+                ContributorRow(
+                    name = it.name,
+                    description = stringResource(it.role.descriptionResId),
+                    url = it.socialUrl,
+                    photoUrl = it.photoUrl,
+                )
+            }
+        }
+        PreferenceGroup(heading = stringResource(id = R.string.original_app_name)) {
             product.forEach {
                 ContributorRow(
                     name = it.name,

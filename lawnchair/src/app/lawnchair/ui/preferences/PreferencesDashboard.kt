@@ -51,7 +51,7 @@ fun PreferencesDashboard() {
     PreferenceLayout(
         label = stringResource(id = R.string.settings),
         verticalArrangement = Arrangement.Top,
-        backArrowVisible = false,
+        backArrowVisible = true,
         actions = { PreferencesOverflowMenu() }
     ) {
         if (BuildConfig.DEBUG) PreferencesDebugWarning()

@@ -82,8 +82,8 @@ final def ciRunNumber = System.getenv("GITHUB_RUN_NUMBER") ?: ""
 final def isReleaseBuild = ciBuild && ciRef.contains("alpha")
 final def devReleaseName = ciBuild ? "Dev (#${ciRunNumber})" : "Dev (${buildCommit})"
 
-final def version = "12.1.0"
-final def releaseName = "Alpha 4"
+final def version = "1.0"
+final def releaseName = "Alpha"
 final def versionDisplayName = "${version} ${isReleaseBuild ? releaseName : devReleaseName}"
 final def majorVersion = versionDisplayName.split("\\.")[0]
 
@@ -99,6 +99,9 @@ android {
         buildConfigField "String", "MAJOR_VERSION", "\"${majorVersion}\""
         buildConfigField "String", "COMMIT_HASH", "\"${buildCommit}\""
         buildConfigField "boolean", "ENABLE_AUTO_INSTALLS_LAYOUT", "false"
+
+        resValue("string", "original_app_name", "Lawnchair")
+        resValue("string", "original_app_credit", "Based on Lawnchair")
 
         manifestPlaceholders.quickstepMinSdk = quickstepMinSdk
         manifestPlaceholders.quickstepMaxSdk = quickstepMaxSdk

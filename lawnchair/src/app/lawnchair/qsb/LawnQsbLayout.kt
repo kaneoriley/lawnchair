@@ -27,6 +27,7 @@ import app.lawnchair.qsb.providers.QsbSearchProvider
 import app.lawnchair.util.pendingIntent
 import app.lawnchair.util.recursiveChildren
 import app.lawnchair.util.repeatOnAttached
+import app.lawnchair.util.startOrRequestInstall
 import app.lawnchair.util.viewAttachedScope
 import com.android.launcher3.BaseActivity
 import com.android.launcher3.DeviceProfile
@@ -153,12 +154,10 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     private fun setUpLensIcon() {
         val lensIntent = Intent.makeMainActivity(ComponentName(LENS_PACKAGE, LENS_ACTIVITY))
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
-        if (context.packageManager.resolveActivity(lensIntent, 0) == null) return
-
         with(lensIcon) {
             isVisible = true
             setOnClickListener {
-                runCatching { context.startActivity(lensIntent) }
+                runCatching { context.startOrRequestInstall(LENS_PACKAGE, lensIntent) }
             }
         }
     }

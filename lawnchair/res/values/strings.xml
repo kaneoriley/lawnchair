@@ -19,7 +19,7 @@
     <string name="iconPackPackageDefault" translatable="false">""</string>
 
     <!-- PreferenceDashboard -->
-    <string name="set_default_launcher_tip">Tap this card to set Lawnchair as your default launcher.</string>
+    <string name="set_default_launcher_tip">Tap this card to set Swag as your default launcher.</string>
     <string name="settings">Settings</string>
     <string name="general_label">General</string>
     <string name="general_description">Colors, Icon Pack, Notification Dots</string>
@@ -44,7 +44,7 @@
 
     <!-- PreferencesOverflowMenu() in PreferencesDashboard -->
     <string name="app_info_drop_target_label">App Info</string>
-    <string name="debug_restart_launcher">Restart Lawnchair</string>
+    <string name="debug_restart_launcher">Restart Swag</string>
     <string name="experimental_features_label">Experimental Features</string>
 
     <!-- ExperimentalFeaturesPreferences -->
@@ -182,7 +182,7 @@
     <string name="action_paste">Paste</string>
     <string name="copied_toast">Copied to clipboard.</string>
     <string name="invalid_color">Invalid Color</string>
-    <string name="launcher_default_color">Managed by Lawnchair</string>
+    <string name="launcher_default_color">Managed by Swag</string>
 
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
@@ -275,10 +275,10 @@
     <string name="smartspace_preferences">Preferences</string>
 
     <string name="smartspace_widget_toggle_label">Show on Home Screen</string>
-    <string name="smartspace_widget_toggle_description">At a Glance can be manually added by placing the "Lawnchair" widget.</string>
+    <string name="smartspace_widget_toggle_description">At a Glance can be manually added by placing the "Swag" widget.</string>
 
     <string name="smartspace_mode_label">At a Glance Provider</string>
-    <string name="smartspace_mode_lawnchair">Lawnchair</string>
+    <string name="smartspace_mode_lawnchair">Swag</string>
     <string name="smartspace_mode_google">Google</string>
     <string name="smartspace_mode_google_search">Google Search</string>
 
@@ -286,7 +286,7 @@
     <!-- <string name="dock_label" /> -->
     <string name="hotseat_mode_label">Search Bar Widget</string>
       <string name="hotseat_mode_disabled">Disabled</string>
-      <string name="hotseat_mode_lawnchair">Lawnchair</string>
+      <string name="hotseat_mode_lawnchair">Swag</string>
       <string name="hotseat_mode_google_search">Google Search Bar</string>
       <string name="search_bar_label">Search Bar</string>
       <string name="corner_radius_label">Corner Radius</string>
@@ -405,6 +405,7 @@
       <string name="development">Development</string>
       <string name="quickswitch_maintenance">QuickSwitch Maintenance</string>
       <string name="devops">DevOps</string>
+    <string name="awesomeness">Galactic President Superstar McAwesomeville</string>
 
     <string name="support_and_pr">Support &amp; PR</string>
       <!--
@@ -430,10 +431,10 @@
     <string name="all_apps_no_search_results">No apps found matching “<xliff:g example="Android" id="query">%1$s</xliff:g>”.</string>
 
     <string name="dt2s_admin_hint_title">Admin Permissions Required</string>
-    <string name="dt2s_admin_hint">To use Double-Tap to Sleep, set Lawnchair as a device admin app. Tap Open Settings, then tap “Activate this device admin app.”</string>
+    <string name="dt2s_admin_hint">To use Double-Tap to Sleep, set Swag as a device admin app. Tap Open Settings, then tap “Activate this device admin app.”</string>
     <string name="dt2s_admin_warning">Double-Tap to Sleep will be turned off.</string>
     <string name="dt2s_a11y_hint_title">Turn on Accessibility Service</string>
-    <string name="dt2s_a11y_hint">To use Double-Tap to Sleep, turn on the Lawnchair accessibility service. Tap Open Settings, then select Lawnchair and turn on Use Lawnchair.</string>
+    <string name="dt2s_a11y_hint">To use Double-Tap to Sleep, turn on the Swag accessibility service. Tap Open Settings, then select Swag and turn on Use Swag.</string>
     <string name="dt2s_warning_open_settings">Open Settings</string>
 
     <string name="loading">Loading…</string>
@@ -447,7 +448,7 @@
     <string name="n_percent" translatable="false">%1$d%%</string>
 
     <!-- Bug reporting -->
-    <string name="lawnchair_bug_report">Lawnchair Bug Report</string>
+    <string name="lawnchair_bug_report">Swag Bug Report</string>
     <string name="crash_report_notif_title">%1$s Crashed</string>
     <string name="action_upload_crash_report">Upload Crash Log</string>
 
