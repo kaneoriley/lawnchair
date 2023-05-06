@@ -204,6 +204,18 @@ public class LoaderTask implements Runnable {
         TimingLogger logger = new TimingLogger(TAG, "run");
         LoaderMemoryLogger memoryLogger = new LoaderMemoryLogger();
         try (LauncherModel.LoaderTransaction transaction = mApp.getModel().beginLoader(this)) {
+
+            // second step
+            Trace.beginSection("LoadAllApps");
+            List<LauncherActivityInfo> allActivityList;
+            try {
+                allActivityList = loadAllApps();
+            } finally {
+                Trace.endSection();
+            }
+            logASplit(logger, "loadAllApps");
+            verifyNotStopped();
+
             List<ShortcutInfo> allShortcuts = new ArrayList<>();
             Trace.beginSection("LoadWorkspace");
             try {
@@ -237,17 +249,6 @@ public class LoaderTask implements Runnable {
             logASplit(logger, "step 1 complete");
             verifyNotStopped();
 
-            // second step
-            Trace.beginSection("LoadAllApps");
-            List<LauncherActivityInfo> allActivityList;
-            try {
-               allActivityList = loadAllApps();
-            } finally {
-                Trace.endSection();
-            }
-            logASplit(logger, "loadAllApps");
-
-            verifyNotStopped();
             mResults.bindAllApps();
             logASplit(logger, "bindAllApps");
 
@@ -374,8 +375,9 @@ public class LoaderTask implements Runnable {
         }
 
         Log.d(TAG, "loadWorkspace: loading default favorites");
-        LauncherSettings.Settings.call(contentResolver,
-                LauncherSettings.Settings.METHOD_LOAD_DEFAULT_FAVORITES);
+        if (mBgAllAppsList != null) {
+            LauncherSettings.Settings.callLoadApps(contentResolver, mBgAllAppsList.data);
+        }
 
         synchronized (mBgDataModel) {
             mBgDataModel.clear();

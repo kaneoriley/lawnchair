@@ -16,6 +16,8 @@ import android.util.ArrayMap;
 import android.util.Log;
 
 import com.android.launcher3.LauncherSettings.Favorites;
+import com.android.launcher3.util.GridOccupancy;
+import com.android.launcher3.util.IntSparseArrayMap;
 import com.android.launcher3.util.Thunk;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -209,7 +211,7 @@ public class DefaultLayoutParser extends AutoInstallsLayout {
         private final AppShortcutWithUriParser mChildParser = new AppShortcutWithUriParser();
 
         @Override
-        public int parseAndAdd(XmlPullParser parser) throws XmlPullParserException,
+        public int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies) throws XmlPullParserException,
                 IOException {
             final int groupDepth = parser.getDepth();
             int type;
@@ -221,7 +223,7 @@ public class DefaultLayoutParser extends AutoInstallsLayout {
                 }
                 final String fallback_item_name = parser.getName();
                 if (TAG_FAVORITE.equals(fallback_item_name)) {
-                    addedId = mChildParser.parseAndAdd(parser);
+                    addedId = mChildParser.parseAndAdd(parser, gridOccupancies);
                 } else {
                     Log.e(TAG, "Fallback groups can contain only favorites, found "
                             + fallback_item_name);
@@ -238,7 +240,7 @@ public class DefaultLayoutParser extends AutoInstallsLayout {
     class PartnerFolderParser implements TagParser {
 
         @Override
-        public int parseAndAdd(XmlPullParser parser) throws XmlPullParserException,
+        public int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies) throws XmlPullParserException,
                 IOException {
             // Folder contents come from an external XML resource
             final Partner partner = Partner.get(mPackageManager);
@@ -251,7 +253,7 @@ public class DefaultLayoutParser extends AutoInstallsLayout {
                     beginDocument(partnerParser, TAG_FOLDER);
 
                     FolderParser folderParser = new FolderParser(getFolderElementsMap(partnerRes));
-                    return folderParser.parseAndAdd(partnerParser);
+                    return folderParser.parseAndAdd(partnerParser, gridOccupancies);
                 }
             }
             return -1;
@@ -265,14 +267,14 @@ public class DefaultLayoutParser extends AutoInstallsLayout {
     class MyFolderParser extends FolderParser {
 
         @Override
-        public int parseAndAdd(XmlPullParser parser) throws XmlPullParserException,
+        public int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies) throws XmlPullParserException,
                 IOException {
             final int resId = getAttributeResourceValue(parser, ATTR_FOLDER_ITEMS, 0);
             if (resId != 0) {
                 parser = mSourceRes.getXml(resId);
                 beginDocument(parser, TAG_FOLDER);
             }
-            return super.parseAndAdd(parser);
+            return super.parseAndAdd(parser, gridOccupancies);
         }
     }
 

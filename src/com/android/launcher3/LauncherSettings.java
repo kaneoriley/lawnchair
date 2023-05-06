@@ -22,7 +22,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 
+import com.android.launcher3.model.data.AppInfo;
 import com.android.launcher3.model.data.ItemInfo;
+
+import java.util.ArrayList;
 
 /**
  * Settings related utilities.
@@ -398,6 +401,12 @@ public class LauncherSettings {
 
         public static Bundle call(ContentResolver cr, String method) {
             return call(cr, method, null /* arg */);
+        }
+
+        public static Bundle callLoadApps(ContentResolver cr, ArrayList<AppInfo> apps) {
+            Bundle data = new Bundle();
+            data.putSerializable("apps", apps);
+            return cr.call(CONTENT_URI, METHOD_LOAD_DEFAULT_FAVORITES, null, data);
         }
 
         public static Bundle call(ContentResolver cr, String method, String arg) {
