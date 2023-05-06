@@ -69,6 +69,7 @@ import androidx.annotation.Nullable;
 
 import com.android.launcher3.accessibility.AccessibleDragListenerAdapter;
 import com.android.launcher3.accessibility.WorkspaceAccessibilityHelper;
+import com.android.launcher3.allapps.AllAppsRecyclerView;
 import com.android.launcher3.anim.Interpolators;
 import com.android.launcher3.anim.PendingAnimation;
 import com.android.launcher3.config.FeatureFlags;
@@ -1736,6 +1737,10 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
                     .showForIcon((BubbleTextView) child);
             if (popupContainer != null) {
                 dragOptions.preDragCondition = popupContainer.createPreDragCondition(true);
+            }
+            if (child.getParent() instanceof AllAppsRecyclerView) {
+                // Don't allow dragging in the app drawer.
+                return null;
             }
         }
 

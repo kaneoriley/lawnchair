@@ -86,7 +86,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
     @Override
     protected boolean supportsDrop(ItemInfo info) {
-        return true;
+        // Allow dropping from cancel from app drawer.
+        return canRemove(info) || info.id == ItemInfo.NO_ID;
     }
 
     /**
@@ -103,7 +104,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
     }
 
     private boolean canRemove(ItemInfo item) {
-        return item.id != ItemInfo.NO_ID;
+        return item.itemType != Favorites.ITEM_TYPE_APPLICATION &&
+            item.itemType != Favorites.ITEM_TYPE_FOLDER && item.id != ItemInfo.NO_ID;
     }
 
     /**

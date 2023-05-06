@@ -54,13 +54,13 @@ fun HomeScreenPreferences() {
         val lockHomeScreenAdapter = prefs2.lockHomeScreen.getAdapter()
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
             val addIconToHomeAdapter = prefs.addIconToHome.getAdapter()
-            SwitchPreference(
-                checked = !lockHomeScreenAdapter.state.value && addIconToHomeAdapter.state.value,
-                onCheckedChange = addIconToHomeAdapter::onChange,
-                label = stringResource(id = R.string.auto_add_shortcuts_label),
-                description = if (lockHomeScreenAdapter.state.value) stringResource(id = R.string.home_screen_locked) else null,
-                enabled = lockHomeScreenAdapter.state.value.not(),
-            )
+//            SwitchPreference(
+//                checked = !lockHomeScreenAdapter.state.value && addIconToHomeAdapter.state.value,
+//                onCheckedChange = addIconToHomeAdapter::onChange,
+//                label = stringResource(id = R.string.auto_add_shortcuts_label),
+//                description = if (lockHomeScreenAdapter.state.value) stringResource(id = R.string.home_screen_locked) else null,
+//                enabled = lockHomeScreenAdapter.state.value.not(),
+//            )
             GestureHandlerPreference(
                 adapter = prefs2.doubleTapGestureHandler.getAdapter(),
                 label = stringResource(id = R.string.gesture_double_tap),
