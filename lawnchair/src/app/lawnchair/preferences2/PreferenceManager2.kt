@@ -75,7 +75,7 @@ class PreferenceManager2 private constructor(private val context: Context) : Pre
     val allAppsOnHome = preference(
         key = booleanPreferencesKey(name = "all_apps_on_home"),
         defaultValue = context.resources.getBoolean(R.bool.config_default_all_apps_on_home_screen),
-        onSet = { reloadHelper.recreate() }
+        onSet = { LauncherAppState.getInstanceNoCreate().model.forceReload() }
     )
 
     val darkStatusBar = preference(
