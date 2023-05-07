@@ -111,7 +111,7 @@ android {
 
     applicationVariants.configureEach { variant ->
         variant.outputs.configureEach {
-            outputFileName = "Lawnchair ${variant.versionName}.apk"
+            outputFileName = "Swag ${variant.versionName}.apk"
         }
     }
 

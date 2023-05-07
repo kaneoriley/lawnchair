@@ -1738,14 +1738,11 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
             if (popupContainer != null) {
                 dragOptions.preDragCondition = popupContainer.createPreDragCondition(true);
             }
-            if (child.getParent() instanceof AllAppsRecyclerView) {
-                // Don't allow dragging in the app drawer.
-                return null;
-            }
         }
 
         boolean lockHomeScreen = PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getLockHomeScreen());
-        if (lockHomeScreen) {
+        // Also block drag for all apps items.
+        if (lockHomeScreen || child.getParent() instanceof AllAppsRecyclerView) {
             child.setVisibility(View.VISIBLE);
 
             if (dragOptions.preDragCondition != null) {

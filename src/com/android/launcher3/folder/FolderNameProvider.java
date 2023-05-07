@@ -113,6 +113,7 @@ public class FolderNameProvider implements ResourceBasedOverride {
         // If all the icons are from same package (e.g., main icon, shortcut, shortcut)
         // Then, suggest the package's title as the folder name
         Set<String> packageNames = workspaceItemInfos.stream()
+                .filter(Objects::nonNull)
                 .map(WorkspaceItemInfo::getTargetComponent)
                 .filter(Objects::nonNull)
                 .map(ComponentName::getPackageName)

@@ -54,6 +54,7 @@ fun HomeScreenPreferences() {
         val lockHomeScreenAdapter = prefs2.lockHomeScreen.getAdapter()
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
             val addIconToHomeAdapter = prefs.addIconToHome.getAdapter()
+            // We want all apps to be on home screen so this doesn't make sense as a preference
 //            SwitchPreference(
 //                checked = !lockHomeScreenAdapter.state.value && addIconToHomeAdapter.state.value,
 //                onCheckedChange = addIconToHomeAdapter::onChange,

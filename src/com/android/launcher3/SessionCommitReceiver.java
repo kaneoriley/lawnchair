@@ -84,7 +84,8 @@ public class SessionCommitReceiver extends BroadcastReceiver {
     }
 
     public static boolean isEnabled(Context context) {
-        if (PreferenceExtensionsKt.firstBlocking(PreferenceManager2.getInstance(context).getLockHomeScreen())) return false;
+        // New installs should always add an icon, and bypass home screen locking.
+//        if (PreferenceExtensionsKt.firstBlocking(PreferenceManager2.getInstance(context).getLockHomeScreen())) return false;
         return Utilities.getPrefs(context).getBoolean(ADD_ICON_PREFERENCE_KEY, true);
     }
 }
