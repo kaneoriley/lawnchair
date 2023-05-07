@@ -1741,8 +1741,9 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
         }
 
         boolean lockHomeScreen = PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getLockHomeScreen());
+        boolean allAppsOnHome = PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getAllAppsOnHome());
         // Also block drag for all apps items.
-        if (lockHomeScreen || child.getParent() instanceof AllAppsRecyclerView) {
+        if (lockHomeScreen || (allAppsOnHome && child.getParent() instanceof AllAppsRecyclerView)) {
             child.setVisibility(View.VISIBLE);
 
             if (dragOptions.preDragCondition != null) {

@@ -75,6 +75,7 @@ import com.android.launcher3.util.NoLocaleSQLiteHelper;
 import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.widget.LauncherAppWidgetHost;
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -1051,6 +1052,11 @@ public class LauncherProvider extends ContentProvider {
 
             // Ensure that the max ids are initialized
             mMaxItemId = initializeMaxItemId(db);
+
+            if (!PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome())) {
+                // All apps disabled, abort now.
+                return count;
+            }
 
             ArrayList<Integer> screenIds = new ArrayList<>();
             HashSet<String> addedAppComponents = loader.addedAppComponents;

@@ -36,6 +36,7 @@ import com.android.launcher3.model.data.LauncherAppWidgetInfo;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.util.IntSet;
 import com.android.launcher3.views.Snackbar;
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 
 public class DeleteDropTarget extends ButtonDropTarget {
 
@@ -87,7 +88,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
     @Override
     protected boolean supportsDrop(ItemInfo info) {
         // Allow dropping from cancel from app drawer.
-        return canRemove(info) || info.id == ItemInfo.NO_ID;
+        return canRemove(info) || canCancel(info);
     }
 
     /**
@@ -103,9 +104,15 @@ public class DeleteDropTarget extends ButtonDropTarget {
         }
     }
 
+    private boolean canCancel(ItemInfo item) {
+        boolean isAllAppsMode = PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome());
+        return !isAllAppsMode && item.id == ItemInfo.NO_ID;
+    }
+
     private boolean canRemove(ItemInfo item) {
-        return item.itemType != Favorites.ITEM_TYPE_APPLICATION &&
-            item.itemType != Favorites.ITEM_TYPE_FOLDER && item.id != ItemInfo.NO_ID;
+        boolean isAllAppsMode = PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome());
+        return (!isAllAppsMode && item.id != ItemInfo.NO_ID) || (item.itemType != Favorites.ITEM_TYPE_APPLICATION &&
+            item.itemType != Favorites.ITEM_TYPE_FOLDER && item.id != ItemInfo.NO_ID);
     }
 
     /**

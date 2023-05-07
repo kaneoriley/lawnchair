@@ -186,6 +186,7 @@
 
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
+    <string name="all_app_on_homescreen_label">All Apps on home screen</string>
       <string name="auto_add_shortcuts_label">Add New Apps to Home Screen</string>
       <!-- <string name="gesture_double_tap" /> -->
       <string name="minus_one_enable">Feed</string>

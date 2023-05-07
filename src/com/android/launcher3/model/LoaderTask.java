@@ -98,6 +98,7 @@ import com.android.launcher3.util.PackageUserKey;
 import com.android.launcher3.util.TraceHelper;
 import com.android.launcher3.widget.LauncherAppWidgetProviderInfo;
 import com.android.launcher3.widget.WidgetManagerHelper;
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -254,7 +255,7 @@ public class LoaderTask implements Runnable {
             mResults.bindAllApps();
             logASplit(logger, "bindAllApps");
 
-            if (mBgAllAppsList != null) {
+            if (PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome()) && mBgAllAppsList != null) {
                 List<Pair<ItemInfo, Object>> missingItems = new ArrayList<>();
 
                 for (AppInfo appInfo : mBgAllAppsList.data) {

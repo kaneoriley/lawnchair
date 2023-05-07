@@ -72,6 +72,12 @@ class PreferenceManager2 private constructor(private val context: Context) : Pre
     override val preferencesDataStore = context.preferencesDataStore
     private val reloadHelper = ReloadHelper(context)
 
+    val allAppsOnHome = preference(
+        key = booleanPreferencesKey(name = "all_apps_on_home"),
+        defaultValue = context.resources.getBoolean(R.bool.config_default_all_apps_on_home_screen),
+        onSet = { reloadHelper.recreate() }
+    )
+
     val darkStatusBar = preference(
         key = booleanPreferencesKey(name = "dark_status_bar"),
         defaultValue = context.resources.getBoolean(R.bool.config_default_dark_status_bar),

@@ -43,6 +43,7 @@ import com.android.launcher3.util.GridOccupancy;
 import com.android.launcher3.util.IntArray;
 import com.android.launcher3.util.IntSet;
 import com.android.launcher3.util.PackageManagerHelper;
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,11 +86,11 @@ public class AddWorkspaceItemsTask extends BaseModelUpdateTask {
                         continue;
                     }
 
-                    // We want to ensure items are added to the home screen so commenting this out.
-//                    // b/139663018 Short-circuit this logic if the icon is a system app
-//                    if (PackageManagerHelper.isSystemApp(app.getContext(), item.getIntent())) {
-//                        continue;
-//                    }
+                    // b/139663018 Short-circuit this logic if the icon is a system app
+                    boolean allAppsOnHome = PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome());
+                    if (!allAppsOnHome && PackageManagerHelper.isSystemApp(app.getContext(), item.getIntent())) {
+                        continue;
+                    }
                 }
 
                 if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
