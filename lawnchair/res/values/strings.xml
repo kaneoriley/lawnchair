@@ -499,7 +499,6 @@
     <string name="invalid_backup_file">Invalid backup file.</string>
 
     <string name="google_folder_title" translatable="false">Google</string>
-    <string name="system_folder_title" translatable="false">System</string>
 
     <string name="x_by_y">%1$d × %2$d</string>
     <string name="x_and_y">%s &amp; %s</string>

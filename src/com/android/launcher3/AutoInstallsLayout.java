@@ -276,18 +276,6 @@ public class AutoInstallsLayout {
         final int container = mTemp[0];
         final int screenId = mTemp[1];
 
-        // Fix items being added to hotseat that don't fit there.
-        if (container == Favorites.CONTAINER_HOTSEAT) {
-            int numHotseatIcons = LauncherAppState.getIDP(mContext).numDatabaseHotseatIcons;
-            if (screenId >= numHotseatIcons) {
-                int depth = parser.getDepth();
-                while (parser.next() != XmlPullParser.END_TAG || parser.getDepth() > depth) {
-                    // Skip
-                }
-                return 0;
-            }
-        }
-
         mValues.put(Favorites.CONTAINER, container);
         mValues.put(Favorites.SCREEN, screenId);
 

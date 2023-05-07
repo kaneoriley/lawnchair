@@ -16,6 +16,8 @@
 
 package com.android.launcher3;
 
+import static app.lawnchair.util.LennoxSwagUtilsKt.getPrefs2;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -82,8 +84,8 @@ public class SessionCommitReceiver extends BroadcastReceiver {
     }
 
     public static boolean isEnabled(Context context) {
-        boolean allApps = PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome());
-        if (!allApps && PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getLockHomeScreen())) return false;
+        boolean allApps = PreferenceExtensionsKt.firstBlocking(getPrefs2().getAllAppsOnHome());
+        if (!allApps && PreferenceExtensionsKt.firstBlocking(getPrefs2().getLockHomeScreen())) return false;
         return allApps || Utilities.getPrefs(context).getBoolean(ADD_ICON_PREFERENCE_KEY, true);
     }
 }

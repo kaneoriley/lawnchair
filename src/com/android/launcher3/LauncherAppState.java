@@ -54,8 +54,6 @@ import com.android.launcher3.widget.custom.CustomWidgetManager;
 
 import app.lawnchair.LawnchairAppKt;
 import app.lawnchair.icons.LawnchairIconProvider;
-import app.lawnchair.preferences.PreferenceManager;
-import app.lawnchair.preferences2.PreferenceManager2;
 
 public class LauncherAppState implements SafeCloseable {
 
@@ -86,14 +84,6 @@ public class LauncherAppState implements SafeCloseable {
 
     public static LauncherAppState getInstanceNoCreate() {
         return INSTANCE.getNoCreate();
-    }
-
-    public static PreferenceManager getPrefss() {
-        return PreferenceManager.getInstance(INSTANCE.getNoCreate().getContext());
-    }
-
-    public static PreferenceManager2 getPrefs2() {
-        return PreferenceManager2.getInstance(INSTANCE.getNoCreate().getContext());
     }
 
     public Context getContext() {

@@ -4,6 +4,9 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import app.lawnchair.preferences.PreferenceManager
+import app.lawnchair.preferences2.PreferenceManager2
+import com.android.launcher3.LauncherAppState
 
 fun Context.startOrRequestInstall(packageName: String, intent: Intent) {
     if (packageManager.resolveActivity(intent, 0) != null) {
@@ -21,4 +24,12 @@ fun Context.startOrRequestInstall(packageName: String, intent: Intent) {
             )
         )
     }
+}
+
+fun getPrefs(): PreferenceManager {
+    return PreferenceManager.getInstance(LauncherAppState.INSTANCE.noCreate.context)
+}
+
+fun getPrefs2(): PreferenceManager2 {
+    return PreferenceManager2.getInstance(LauncherAppState.INSTANCE.noCreate.context)
 }

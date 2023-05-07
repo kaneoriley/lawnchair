@@ -17,6 +17,8 @@ package com.android.launcher3.model;
 
 import static com.android.launcher3.WorkspaceLayoutManager.FIRST_SCREEN_ID;
 
+import static app.lawnchair.util.LennoxSwagUtilsKt.getPrefs2;
+
 import android.content.Intent;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
@@ -87,7 +89,7 @@ public class AddWorkspaceItemsTask extends BaseModelUpdateTask {
                     }
 
                     // b/139663018 Short-circuit this logic if the icon is a system app
-                    boolean allAppsOnHome = PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome());
+                    boolean allAppsOnHome = PreferenceExtensionsKt.firstBlocking(getPrefs2().getAllAppsOnHome());
                     if (!allAppsOnHome && PackageManagerHelper.isSystemApp(app.getContext(), item.getIntent())) {
                         continue;
                     }

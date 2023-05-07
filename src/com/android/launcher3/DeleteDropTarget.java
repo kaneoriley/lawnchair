@@ -20,6 +20,8 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_ITEM_DROPPED_ON_REMOVE;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_UNDO;
 
+import static app.lawnchair.util.LennoxSwagUtilsKt.getPrefs2;
+
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -105,14 +107,14 @@ public class DeleteDropTarget extends ButtonDropTarget {
     }
 
     private boolean canCancel(ItemInfo item) {
-        boolean isAllAppsMode = PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome());
+        boolean isAllAppsMode = PreferenceExtensionsKt.firstBlocking(getPrefs2().getAllAppsOnHome());
         return !isAllAppsMode && item.id == ItemInfo.NO_ID;
     }
 
     private boolean canRemove(ItemInfo item) {
-        boolean isAllAppsMode = PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome());
-        return (!isAllAppsMode && item.id != ItemInfo.NO_ID) || (item.itemType != Favorites.ITEM_TYPE_APPLICATION &&
-            item.itemType != Favorites.ITEM_TYPE_FOLDER && item.id != ItemInfo.NO_ID);
+        boolean isAllAppsMode = PreferenceExtensionsKt.firstBlocking(getPrefs2().getAllAppsOnHome());
+        return item.id != ItemInfo.NO_ID && (!isAllAppsMode || item.itemType != Favorites.ITEM_TYPE_APPLICATION &&
+            item.itemType != Favorites.ITEM_TYPE_FOLDER);
     }
 
     /**

@@ -27,6 +27,8 @@ import static com.android.launcher3.util.Executors.MODEL_EXECUTOR;
 import static com.android.launcher3.util.PackageManagerHelper.hasShortcutsPermission;
 import static com.android.launcher3.util.PackageManagerHelper.isSystemApp;
 
+import static app.lawnchair.util.LennoxSwagUtilsKt.getPrefs2;
+
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
@@ -337,10 +339,10 @@ public class LoaderTask implements Runnable {
 
     private void verifyMissingAndDuplicated(BgDataModel dataModel) {
         // Add missing apps to workspace and db if in all apps mode, and remove duplicates.
-        if (PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome()) && mBgAllAppsList != null) {
+        if (PreferenceExtensionsKt.firstBlocking(getPrefs2().getAllAppsOnHome()) && mBgAllAppsList != null) {
             List<Pair<ItemInfo, Object>> missingItems = new ArrayList<>();
             List<String> duplicatedComponents = new ArrayList<>();
-            List<ItemInfo> duplicateItems = new ArrayList<>();
+            List<ItemInfo> pendingDeletionItems = new ArrayList<>();
 
             for (AppInfo appInfo : mBgAllAppsList.data) {
                 boolean hasWorkspaceItem = false;
@@ -348,15 +350,15 @@ public class LoaderTask implements Runnable {
 
                 // Check folders now
                 for (FolderInfo folderInfo : mBgDataModel.folders) {
-                    for (ItemInfo itemInfo1 : folderInfo.contents) {
-                        if (itemInfo1.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
-                            String itemTargetName = itemInfo1.getTargetComponent() != null ? itemInfo1.getTargetComponent().toString() : null;
+                    for (ItemInfo itemInfo : folderInfo.contents) {
+                        if (itemInfo.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
+                            String itemTargetName = itemInfo.getTargetComponent() != null ? itemInfo.getTargetComponent().toString() : null;
                             if (itemTargetName != null && itemTargetName.equals(appTargetName)) {
                                 if (hasWorkspaceItem) {
                                     if (!duplicatedComponents.contains(itemTargetName)) {
                                         duplicatedComponents.add(itemTargetName);
                                     }
-                                    duplicateItems.add(itemInfo1);
+                                    if (!pendingDeletionItems.contains(itemInfo)) pendingDeletionItems.add(itemInfo);
                                 } else {
                                     hasWorkspaceItem = true;
                                 }
@@ -373,7 +375,7 @@ public class LoaderTask implements Runnable {
                                 if (!duplicatedComponents.contains(itemTargetName)) {
                                     duplicatedComponents.add(itemTargetName);
                                 }
-                                duplicateItems.add(itemInfo);
+                                if (!pendingDeletionItems.contains(itemInfo)) pendingDeletionItems.add(itemInfo);
                             } else {
                                 hasWorkspaceItem = true;
                             }
@@ -391,8 +393,8 @@ public class LoaderTask implements Runnable {
                 mApp.getModel().addAndBindAddedWorkspaceItems(missingItems);
                 Log.d(TAG, "Bound missing workspace items.");
             }
-            if (!duplicatedComponents.isEmpty()) {
-                mApp.getLauncher().getModelWriter().deleteItemsFromDatabase(duplicateItems);
+            if (!pendingDeletionItems.isEmpty()) {
+                mApp.getLauncher().getModelWriter().deleteItemsFromDatabase(pendingDeletionItems);
                 LauncherAppState.getInstanceNoCreate().getModel().forceReload();
                 Log.d(TAG, "Removed duplicated workspace items.");
             }
