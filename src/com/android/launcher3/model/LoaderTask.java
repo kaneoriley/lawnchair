@@ -108,7 +108,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
-import java.util.function.Consumer;
 
 import app.lawnchair.LawnchairAppKt;
 
@@ -207,18 +206,6 @@ public class LoaderTask implements Runnable {
         TimingLogger logger = new TimingLogger(TAG, "run");
         LoaderMemoryLogger memoryLogger = new LoaderMemoryLogger();
         try (LauncherModel.LoaderTransaction transaction = mApp.getModel().beginLoader(this)) {
-
-            // second step
-            Trace.beginSection("LoadAllApps");
-            List<LauncherActivityInfo> allActivityList;
-            try {
-                allActivityList = loadAllApps();
-            } finally {
-                Trace.endSection();
-            }
-            logASplit(logger, "loadAllApps");
-            verifyNotStopped();
-
             List<ShortcutInfo> allShortcuts = new ArrayList<>();
             Trace.beginSection("LoadWorkspace");
             try {
@@ -252,43 +239,22 @@ public class LoaderTask implements Runnable {
             logASplit(logger, "step 1 complete");
             verifyNotStopped();
 
+            // second step
+            Trace.beginSection("LoadAllApps");
+            List<LauncherActivityInfo> allActivityList;
+            try {
+               allActivityList = loadAllApps();
+            } finally {
+                Trace.endSection();
+            }
+            logASplit(logger, "loadAllApps");
+
+            verifyNotStopped();
             mResults.bindAllApps();
             logASplit(logger, "bindAllApps");
 
-            if (PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome()) && mBgAllAppsList != null) {
-                List<Pair<ItemInfo, Object>> missingItems = new ArrayList<>();
-
-                for (AppInfo appInfo : mBgAllAppsList.data) {
-                    boolean hasWorkspaceItem = false;
-                    for (ItemInfo itemInfo : mBgDataModel.workspaceItems) {
-                        if (itemInfo.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
-                            if (itemInfo.getTargetComponent().toString().equals(appInfo.getTargetComponent().toString())) {
-                                hasWorkspaceItem = true;
-                            }
-                        }
-                    }
-                    if (!hasWorkspaceItem) {
-                        // Check folders now
-                        for (FolderInfo folderInfo : mBgDataModel.folders) {
-                            for (ItemInfo itemInfo : folderInfo.contents) {
-                                if (itemInfo.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
-                                    if (itemInfo.getTargetComponent().toString().equals(appInfo.getTargetComponent().toString())) {
-                                        hasWorkspaceItem = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (!hasWorkspaceItem) {
-                        missingItems.add(new Pair<>(appInfo, appInfo));
-                    }
-                }
-
-                // TODO: Surely this isn't ideal, but a quick hack to ensure apps don't go missing.
-                mApp.getModel().loadAsync(bgDataModel -> mApp.getModel().addAndBindAddedWorkspaceItems(missingItems));
-                logASplit(logger, "bindMissingApps");
-            }
+            // Defer verifying missing and duplicated items until model load complete.
+            mApp.getModel().loadAsync(this::verifyMissingAndDuplicated);
 
             verifyNotStopped();
             IconCacheUpdateHandler updateHandler = mIconCache.getUpdateHandler();
@@ -369,6 +335,70 @@ public class LoaderTask implements Runnable {
         TraceHelper.INSTANCE.endSection(traceToken);
     }
 
+    private void verifyMissingAndDuplicated(BgDataModel dataModel) {
+        // Add missing apps to workspace and db if in all apps mode, and remove duplicates.
+        if (PreferenceExtensionsKt.firstBlocking(LauncherAppState.getPrefs2().getAllAppsOnHome()) && mBgAllAppsList != null) {
+            List<Pair<ItemInfo, Object>> missingItems = new ArrayList<>();
+            List<String> duplicatedComponents = new ArrayList<>();
+            List<ItemInfo> duplicateItems = new ArrayList<>();
+
+            for (AppInfo appInfo : mBgAllAppsList.data) {
+                boolean hasWorkspaceItem = false;
+                String appTargetName = appInfo.getTargetComponent() != null ? appInfo.getTargetComponent().toString() : null;
+
+                // Check folders now
+                for (FolderInfo folderInfo : mBgDataModel.folders) {
+                    for (ItemInfo itemInfo1 : folderInfo.contents) {
+                        if (itemInfo1.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
+                            String itemTargetName = itemInfo1.getTargetComponent() != null ? itemInfo1.getTargetComponent().toString() : null;
+                            if (itemTargetName != null && itemTargetName.equals(appTargetName)) {
+                                if (hasWorkspaceItem) {
+                                    if (!duplicatedComponents.contains(itemTargetName)) {
+                                        duplicatedComponents.add(itemTargetName);
+                                    }
+                                    duplicateItems.add(itemInfo1);
+                                } else {
+                                    hasWorkspaceItem = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                for (ItemInfo itemInfo : mBgDataModel.workspaceItems) {
+                    if (itemInfo.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
+                        String itemTargetName = itemInfo.getTargetComponent() != null ? itemInfo.getTargetComponent().toString() : null;
+                        if (itemTargetName != null && itemTargetName.equals(appTargetName)) {
+                            if (hasWorkspaceItem) {
+                                if (!duplicatedComponents.contains(itemTargetName)) {
+                                    duplicatedComponents.add(itemTargetName);
+                                }
+                                duplicateItems.add(itemInfo);
+                            } else {
+                                hasWorkspaceItem = true;
+                            }
+                        }
+                    }
+                }
+
+                if (!hasWorkspaceItem) {
+                    missingItems.add(new Pair<>(appInfo, appInfo));
+                }
+            }
+            Log.d(TAG, "Queried missing and duplicated apps.");
+
+            if (!missingItems.isEmpty()) {
+                mApp.getModel().addAndBindAddedWorkspaceItems(missingItems);
+                Log.d(TAG, "Bound missing workspace items.");
+            }
+            if (!duplicatedComponents.isEmpty()) {
+                mApp.getLauncher().getModelWriter().deleteItemsFromDatabase(duplicateItems);
+                LauncherAppState.getInstanceNoCreate().getModel().forceReload();
+                Log.d(TAG, "Removed duplicated workspace items.");
+            }
+        }
+    }
+
     public synchronized void stopLocked() {
         mStopped = true;
         this.notify();
@@ -413,9 +443,8 @@ public class LoaderTask implements Runnable {
         }
 
         Log.d(TAG, "loadWorkspace: loading default favorites");
-        if (mBgAllAppsList != null) {
-            LauncherSettings.Settings.callLoadApps(contentResolver, mBgAllAppsList.data);
-        }
+        LauncherSettings.Settings.call(contentResolver,
+                LauncherSettings.Settings.METHOD_LOAD_DEFAULT_FAVORITES);
 
         synchronized (mBgDataModel) {
             mBgDataModel.clear();

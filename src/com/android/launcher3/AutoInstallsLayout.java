@@ -44,14 +44,10 @@ import com.android.launcher3.LauncherProvider.SqlArguments;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.icons.GraphicsUtils;
 import com.android.launcher3.icons.LauncherIcons;
-import com.android.launcher3.model.data.AppInfo;
 import com.android.launcher3.model.data.LauncherAppWidgetInfo;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
-import com.android.launcher3.pm.UserCache;
 import com.android.launcher3.qsb.QsbContainerView;
-import com.android.launcher3.util.GridOccupancy;
 import com.android.launcher3.util.IntArray;
-import com.android.launcher3.util.IntSparseArrayMap;
 import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.Thunk;
 
@@ -59,8 +55,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.function.Supplier;
 
@@ -81,8 +75,6 @@ public class AutoInstallsLayout {
     private static final String FORMATTED_LAYOUT_RES_WITH_HOSTEAT = "default_layout_%dx%d_h%s";
     private static final String FORMATTED_LAYOUT_RES = "default_layout_%dx%d";
     private static final String LAYOUT_RES = "default_layout";
-
-    HashSet<String> addedAppComponents = new HashSet<>();
 
     static AutoInstallsLayout get(Context context, AppWidgetHost appWidgetHost,
             LayoutParserCallback callback) {
@@ -211,221 +203,25 @@ public class AutoInstallsLayout {
         mIdp = LauncherAppState.getIDP(context);
         mRowCount = mIdp.numRows;
         mColumnCount = mIdp.numColumns;
-        mAddAppY = (mRowCount + 1) / 2;
     }
 
     /**
      * Loads the layout in the db and returns the number of entries added on the desktop.
      */
-    public int loadLayout(SQLiteDatabase db, IntArray screenIds, IntSparseArrayMap<GridOccupancy> gridOccupancies) {
+    public int loadLayout(SQLiteDatabase db, IntArray screenIds) {
         mDb = db;
         try {
-            return parseLayout(mInitialLayoutSupplier.get(), screenIds, gridOccupancies);
+            return parseLayout(mInitialLayoutSupplier.get(), screenIds);
         } catch (Exception e) {
             Log.e(TAG, "Error parsing layout: ", e);
             return -1;
         }
     }
 
-    private int mAddAppX = 0;
-    private int mAddAppY = 0;
-    private int mAddAppScreen = 0;
-
-    long addFolder(ArrayList<AppInfo> apps, ArrayList<Integer> screenIds, String folderName, IntSparseArrayMap<GridOccupancy> gridOccupancies) {
-        if (!screenIds.contains(mAddAppScreen)) {
-            screenIds.add(mAddAppScreen);
-        }
-
-        GridOccupancy occupancy = gridOccupancies.get(mAddAppScreen);
-        if (occupancy == null) {
-            occupancy = new GridOccupancy(mColumnCount, mRowCount);
-            gridOccupancies.put(mAddAppScreen, occupancy);
-        }
-
-        while (!occupancy.isRegionVacant(mAddAppX, mAddAppY, 1, 1)) {
-            mAddAppX++;
-            if (mAddAppX == mColumnCount) {
-                mAddAppX = 0;
-                mAddAppY++;
-            }
-            if (mAddAppY == mRowCount) {
-                // New screen, clear grid occupancy.
-                mAddAppX = 0;
-                mAddAppY = 0;
-                mAddAppScreen++;
-                occupancy = gridOccupancies.get(mAddAppScreen);
-                if (occupancy == null) {
-                    occupancy = new GridOccupancy(mColumnCount, mRowCount);
-                    gridOccupancies.put(mAddAppScreen, occupancy);
-                }
-            }
-        }
-
-        mValues.clear();
-        mValues.put(Favorites.CONTAINER, Favorites.CONTAINER_DESKTOP);
-        mValues.put(Favorites.SCREEN, mAddAppScreen);
-        mValues.put(Favorites.CELLX, mAddAppX);
-        mValues.put(Favorites.CELLY, mAddAppY);
-        mValues.put(Favorites.TITLE, folderName);
-
-        mValues.put(Favorites.ITEM_TYPE, Favorites.ITEM_TYPE_FOLDER);
-        mValues.put(Favorites.SPANX, 1);
-        mValues.put(Favorites.SPANY, 1);
-        mValues.put(Favorites._ID, mCallback.generateNewItemId());
-        int folderId = mCallback.insertAndCheck(mDb, mValues);
-        if (folderId < 0) {
-            // fail
-            if (LOGD) Log.e(TAG, "Unable to add folder");
-            return -1;
-        } else {
-            // success
-            mAddAppX++;
-            if (mAddAppX == mColumnCount) {
-                mAddAppX = 0;
-                mAddAppY++;
-            }
-            if (mAddAppY == mRowCount) {
-                mAddAppX = 0;
-                mAddAppY = 0;
-                mAddAppScreen++;
-            }
-        }
-
-        final ContentValues myValues = new ContentValues(mValues);
-        ArrayList<Long> folderItems = new ArrayList<>();
-
-        int rank = 0;
-        for (AppInfo app : apps) {
-            mValues.clear();
-            mValues.put(Favorites.CONTAINER, folderId);
-            mValues.put(Favorites.RANK, rank);
-
-            ActivityInfo info;
-            try {
-                info = mPackageManager.getActivityInfo(app.getTargetComponent(), 0);
-                String title = info.loadLabel(mPackageManager).toString();
-
-                long id = mCallback.generateNewItemId();
-                mValues.put(Favorites.INTENT, app.intent.toUri(0));
-                mValues.put(Favorites.TITLE, title);
-                mValues.put(Favorites.ITEM_TYPE, Favorites.ITEM_TYPE_APPLICATION);
-                mValues.put(Favorites.SPANX, 1);
-                mValues.put(Favorites.SPANY, 1);
-                mValues.put(Favorites.PROFILE_ID, UserCache.INSTANCE.get(mContext).getSerialNumberForUser(app.user));
-                mValues.put(Favorites._ID, id);
-                if (mCallback.insertAndCheck(mDb, mValues) < 0) {
-                    // fail
-                } else {
-                    // success
-                    folderItems.add(id);
-                    rank++;
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        long addedId = folderId;
-
-        // We can only have folders with >= 2 items, so we need to remove the
-        // folder and clean up if less than 2 items were included, or some
-        // failed to add, and less than 2 were actually added
-        if (folderItems.size() < 2) {
-            // Delete the folder
-            Uri uri = Favorites.getContentUri(folderId);
-            SqlArguments args = new SqlArguments(uri, null, null);
-            mDb.delete(args.table, args.where, args.args);
-            addedId = -1;
-
-            // If we have a single item, promote it to where the folder
-            // would have been.
-            if (folderItems.size() == 1) {
-                final ContentValues childValues = new ContentValues();
-                copyInteger(myValues, childValues, Favorites.CONTAINER);
-                copyInteger(myValues, childValues, Favorites.SCREEN);
-                copyInteger(myValues, childValues, Favorites.CELLX);
-                copyInteger(myValues, childValues, Favorites.CELLY);
-
-                addedId = folderItems.get(0);
-                mDb.update(Favorites.TABLE_NAME, childValues,
-                    Favorites._ID + "=" + addedId, null);
-            }
-        }
-        return addedId;
-    }
-
-    long addApp(AppInfo app, ArrayList<Integer> screenIds, IntSparseArrayMap<GridOccupancy> gridOccupancies) {
-        if (!screenIds.contains(mAddAppScreen)) {
-            screenIds.add(mAddAppScreen);
-        }
-
-        GridOccupancy occupancy = gridOccupancies.get(mAddAppScreen);
-        if (occupancy == null) {
-            occupancy = new GridOccupancy(mColumnCount, mRowCount);
-            gridOccupancies.put(mAddAppScreen, occupancy);
-        }
-
-        while (!occupancy.isRegionVacant(mAddAppX, mAddAppY, 1, 1)) {
-            mAddAppX++;
-            if (mAddAppX == mColumnCount) {
-                mAddAppX = 0;
-                mAddAppY++;
-            }
-            if (mAddAppY == mRowCount) {
-                // New screen, clear grid occupancy.
-                mAddAppX = 0;
-                mAddAppY = 0;
-                mAddAppScreen++;
-                occupancy = gridOccupancies.get(mAddAppScreen);
-                if (occupancy == null) {
-                    occupancy = new GridOccupancy(mColumnCount, mRowCount);
-                    gridOccupancies.put(mAddAppScreen, occupancy);
-                }
-            }
-        }
-
-        try {
-            ActivityInfo info = mPackageManager.getActivityInfo(app.getTargetComponent(), 0);
-            String title = info.loadLabel(mPackageManager).toString();
-            long id = mCallback.generateNewItemId();
-            mValues.clear();
-            mValues.put(Favorites.CONTAINER, Favorites.CONTAINER_DESKTOP);
-            mValues.put(Favorites.SCREEN, mAddAppScreen);
-            mValues.put(Favorites.CELLX, mAddAppX);
-            mValues.put(Favorites.CELLY, mAddAppY);
-            mValues.put(Favorites.INTENT, app.intent.toUri(0));
-            mValues.put(Favorites.TITLE, title);
-            mValues.put(Favorites.ITEM_TYPE, Favorites.ITEM_TYPE_APPLICATION);
-            mValues.put(Favorites.PROFILE_ID, UserCache.INSTANCE.get(mContext).getSerialNumberForUser(app.user));
-            mValues.put(Favorites.SPANX, 1);
-            mValues.put(Favorites.SPANY, 1);
-            mValues.put(Favorites._ID, id);
-            if (mCallback.insertAndCheck(mDb, mValues) < 0) {
-                // fail
-                return -1;
-            } else {
-                // success
-                mAddAppX++;
-                if (mAddAppX == mColumnCount) {
-                    mAddAppX = 0;
-                    mAddAppY++;
-                }
-                if (mAddAppY == mRowCount) {
-                    mAddAppX = 0;
-                    mAddAppY = 0;
-                    mAddAppScreen++;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 1;
-    }
-
     /**
      * Parses the layout and returns the number of elements added on the homescreen.
      */
-    protected int parseLayout(XmlPullParser parser, IntArray screenIds, IntSparseArrayMap<GridOccupancy> gridOccupancies)
+    protected int parseLayout(XmlPullParser parser, IntArray screenIds)
             throws XmlPullParserException, IOException {
         beginDocument(parser, mRootTag);
         final int depth = parser.getDepth();
@@ -438,7 +234,7 @@ public class AutoInstallsLayout {
             if (type != XmlPullParser.START_TAG) {
                 continue;
             }
-            count += parseAndAddNode(parser, tagParserMap, screenIds, gridOccupancies);
+            count += parseAndAddNode(parser, tagParserMap, screenIds);
         }
         return count;
     }
@@ -452,7 +248,6 @@ public class AutoInstallsLayout {
             out[0] = Favorites.CONTAINER_HOTSEAT;
             // Hack: hotseat items are stored using screen ids
             out[1] = Integer.parseInt(getAttributeValue(parser, ATTR_RANK));
-
         } else {
             out[0] = Favorites.CONTAINER_DESKTOP;
             out[1] = Integer.parseInt(getAttributeValue(parser, ATTR_SCREEN));
@@ -463,13 +258,14 @@ public class AutoInstallsLayout {
      * Parses the current node and returns the number of elements added.
      */
     protected int parseAndAddNode(
-            XmlPullParser parser, ArrayMap<String, TagParser> tagParserMap, IntArray screenIds, IntSparseArrayMap<GridOccupancy> gridOccupancies)
+            XmlPullParser parser, ArrayMap<String, TagParser> tagParserMap, IntArray screenIds)
             throws XmlPullParserException, IOException {
+
         if (TAG_INCLUDE.equals(parser.getName())) {
             final int resId = getAttributeResourceValue(parser, ATTR_WORKSPACE, 0);
             if (resId != 0) {
                 // recursively load some more favorites, why not?
-                return parseLayout(mSourceRes.getXml(resId), screenIds, gridOccupancies);
+                return parseLayout(mSourceRes.getXml(resId), screenIds);
             } else {
                 return 0;
             }
@@ -480,6 +276,7 @@ public class AutoInstallsLayout {
         final int container = mTemp[0];
         final int screenId = mTemp[1];
 
+        // Fix items being added to hotseat that don't fit there.
         if (container == Favorites.CONTAINER_HOTSEAT) {
             int numHotseatIcons = LauncherAppState.getIDP(mContext).numDatabaseHotseatIcons;
             if (screenId >= numHotseatIcons) {
@@ -504,27 +301,12 @@ public class AutoInstallsLayout {
             if (LOGD) Log.d(TAG, "Ignoring unknown element tag: " + parser.getName());
             return 0;
         }
-        int newElementId = tagParser.parseAndAdd(parser, gridOccupancies);
+        int newElementId = tagParser.parseAndAdd(parser);
         if (newElementId >= 0) {
             // Keep track of the set of screens which need to be added to the db.
             if (!screenIds.contains(screenId) &&
                     container == Favorites.CONTAINER_DESKTOP) {
                 screenIds.add(screenId);
-            }
-            if (container == Favorites.CONTAINER_DESKTOP) {
-                GridOccupancy occupancy = gridOccupancies.get(screenId);
-                if (occupancy == null) {
-                    occupancy = new GridOccupancy(mColumnCount, mRowCount);
-                    gridOccupancies.put(screenId, occupancy);
-                }
-
-                occupancy.markCells(
-                    mValues.getAsInteger(Favorites.CELLX),
-                    mValues.getAsInteger(Favorites.CELLY),
-                    mValues.getAsInteger(Favorites.SPANX),
-                    mValues.getAsInteger(Favorites.SPANY),
-                    true
-                );
             }
             return 1;
         }
@@ -532,9 +314,6 @@ public class AutoInstallsLayout {
     }
 
     protected int addShortcut(String title, Intent intent, int type) {
-        if (type == Favorites.ITEM_TYPE_APPLICATION) {
-            addedAppComponents.add(intent.getComponent().toString());
-        }
         int id = mCallback.generateNewItemId();
         mValues.put(Favorites.INTENT, intent.toUri(0));
         mValues.put(Favorites.TITLE, title);
@@ -573,7 +352,7 @@ public class AutoInstallsLayout {
          * Parses the tag and adds to the db
          * @return the id of the row added or -1;
          */
-        int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies)
+        int parseAndAdd(XmlPullParser parser)
                 throws XmlPullParserException, IOException;
     }
 
@@ -583,7 +362,7 @@ public class AutoInstallsLayout {
     protected class AppShortcutParser implements TagParser {
 
         @Override
-        public int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies) {
+        public int parseAndAdd(XmlPullParser parser) {
             final String packageName = getAttributeValue(parser, ATTR_PACKAGE_NAME);
             final String className = getAttributeValue(parser, ATTR_CLASS_NAME);
 
@@ -632,7 +411,7 @@ public class AutoInstallsLayout {
     protected class AutoInstallParser implements TagParser {
 
         @Override
-        public int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies) {
+        public int parseAndAdd(XmlPullParser parser) {
             final String packageName = getAttributeValue(parser, ATTR_PACKAGE_NAME);
             final String className = getAttributeValue(parser, ATTR_CLASS_NAME);
             if (TextUtils.isEmpty(packageName) || TextUtils.isEmpty(className)) {
@@ -663,7 +442,7 @@ public class AutoInstallsLayout {
         }
 
         @Override
-        public int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies) {
+        public int parseAndAdd(XmlPullParser parser) {
             final int titleResId = getAttributeResourceValue(parser, ATTR_TITLE, 0);
             final int iconId = getAttributeResourceValue(parser, ATTR_ICON, 0);
 
@@ -730,7 +509,7 @@ public class AutoInstallsLayout {
 
 
         @Override
-        public int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies)
+        public int parseAndAdd(XmlPullParser parser)
                 throws XmlPullParserException, IOException {
             ComponentName cn = getComponentName(parser);
             if (cn == null) {
@@ -816,7 +595,7 @@ public class AutoInstallsLayout {
         }
 
         @Override
-        public int parseAndAdd(XmlPullParser parser, IntSparseArrayMap<GridOccupancy> gridOccupancies)
+        public int parseAndAdd(XmlPullParser parser)
                 throws XmlPullParserException, IOException {
             final String title;
             final int titleResId = getAttributeResourceValue(parser, ATTR_TITLE, 0);
@@ -837,22 +616,6 @@ public class AutoInstallsLayout {
                 if (LOGD) Log.e(TAG, "Unable to add folder");
                 return -1;
             }
-            if (mValues.getAsInteger(Favorites.CONTAINER) == Favorites.CONTAINER_DESKTOP) {
-                int screen = mValues.getAsInteger(Favorites.SCREEN);
-                GridOccupancy occupancy = gridOccupancies.get(screen);
-                if (occupancy == null) {
-                    occupancy = new GridOccupancy(mColumnCount, mRowCount);
-                    gridOccupancies.put(screen, occupancy);
-                }
-
-                occupancy.markCells(
-                    mValues.getAsInteger(Favorites.CELLX),
-                    mValues.getAsInteger(Favorites.CELLY),
-                    1,
-                    1,
-                    true
-                );
-            }
 
             final ContentValues myValues = new ContentValues(mValues);
             IntArray folderItems = new IntArray();
@@ -871,7 +634,7 @@ public class AutoInstallsLayout {
 
                 TagParser tagParser = mFolderElements.get(parser.getName());
                 if (tagParser != null) {
-                    final int id = tagParser.parseAndAdd(parser, gridOccupancies);
+                    final int id = tagParser.parseAndAdd(parser);
                     if (id >= 0) {
                         folderItems.add(id);
                         rank++;
