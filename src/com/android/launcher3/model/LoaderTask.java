@@ -50,6 +50,7 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.LongSparseArray;
+import android.util.Pair;
 import android.util.TimingLogger;
 
 import androidx.annotation.Nullable;
@@ -106,6 +107,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
+import java.util.function.Consumer;
 
 import app.lawnchair.LawnchairAppKt;
 
@@ -251,6 +253,41 @@ public class LoaderTask implements Runnable {
 
             mResults.bindAllApps();
             logASplit(logger, "bindAllApps");
+
+            if (mBgAllAppsList != null) {
+                List<Pair<ItemInfo, Object>> missingItems = new ArrayList<>();
+
+                for (AppInfo appInfo : mBgAllAppsList.data) {
+                    boolean hasWorkspaceItem = false;
+                    for (ItemInfo itemInfo : mBgDataModel.workspaceItems) {
+                        if (itemInfo.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
+                            if (itemInfo.getTargetComponent().toString().equals(appInfo.getTargetComponent().toString())) {
+                                hasWorkspaceItem = true;
+                            }
+                        }
+                    }
+                    if (!hasWorkspaceItem) {
+                        // Check folders now
+                        for (FolderInfo folderInfo : mBgDataModel.folders) {
+                            for (ItemInfo itemInfo : folderInfo.contents) {
+                                if (itemInfo.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
+                                    if (itemInfo.getTargetComponent().toString().equals(appInfo.getTargetComponent().toString())) {
+                                        hasWorkspaceItem = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (!hasWorkspaceItem) {
+                        missingItems.add(new Pair<>(appInfo, appInfo));
+                    }
+                }
+
+                // TODO: Surely this isn't ideal, but a quick hack to ensure apps don't go missing.
+                mApp.getModel().loadAsync(bgDataModel -> mApp.getModel().addAndBindAddedWorkspaceItems(missingItems));
+                logASplit(logger, "bindMissingApps");
+            }
 
             verifyNotStopped();
             IconCacheUpdateHandler updateHandler = mIconCache.getUpdateHandler();

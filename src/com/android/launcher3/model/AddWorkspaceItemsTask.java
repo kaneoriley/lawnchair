@@ -85,10 +85,11 @@ public class AddWorkspaceItemsTask extends BaseModelUpdateTask {
                         continue;
                     }
 
-                    // b/139663018 Short-circuit this logic if the icon is a system app
-                    if (PackageManagerHelper.isSystemApp(app.getContext(), item.getIntent())) {
-                        continue;
-                    }
+                    // We want to ensure items are added to the home screen so commenting this out.
+//                    // b/139663018 Short-circuit this logic if the icon is a system app
+//                    if (PackageManagerHelper.isSystemApp(app.getContext(), item.getIntent())) {
+//                        continue;
+//                    }
                 }
 
                 if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
