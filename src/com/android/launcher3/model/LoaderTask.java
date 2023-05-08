@@ -94,6 +94,7 @@ import com.android.launcher3.util.ComponentKey;
 import com.android.launcher3.util.IOUtils;
 import com.android.launcher3.util.IntArray;
 import com.android.launcher3.util.IntSet;
+import com.android.launcher3.util.ItemInfoMatcher;
 import com.android.launcher3.util.LooperIdleLock;
 import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.PackageUserKey;
@@ -394,9 +395,19 @@ public class LoaderTask implements Runnable {
                 Log.d(TAG, "Bound missing workspace items.");
             }
             if (!pendingDeletionItems.isEmpty()) {
-                mApp.getLauncher().getModelWriter().deleteItemsFromDatabase(pendingDeletionItems);
-                LauncherAppState.getInstanceNoCreate().getModel().forceReload();
-                Log.d(TAG, "Removed duplicated workspace items.");
+                mApp.getModel().enqueueModelUpdateTask(new BaseModelUpdateTask() {
+                    @Override
+                    public void execute(LauncherAppState app, BgDataModel dataModel, AllAppsList apps) {
+                        final IntSet removedIds = new IntSet();
+                        synchronized (dataModel) {
+                            for (ItemInfo info : pendingDeletionItems) {
+                                removedIds.add(info.id);
+                            }
+                        }
+                        deleteAndBindComponentsRemoved(ItemInfoMatcher.ofItemIds(removedIds));
+                        Log.d(TAG, "Removed duplicated workspace items.");
+                    }
+                });
             }
         }
     }
