@@ -16,7 +16,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- PreferenceDashboard -->
-    <string name="set_default_launcher_tip">انقر فوق هذه البطاقة لتعيين Lawnchair كمشغل افتراضي لك.</string>
+    <string name="set_default_launcher_tip">انقر فوق هذه البطاقة لتعيين Swag كمشغل افتراضي لك.</string>
     <string name="settings">الإعدادات</string>
     <string name="general_label">عام</string>
     <string name="general_description">الألوان، حزمة الأيقونة، نقاط الإشعار</string>
@@ -40,7 +40,7 @@
     <!-- <string name="version" /> (unknown source) -->
     <!-- PreferencesOverflowMenu() in PreferencesDashboard -->
     <string name="app_info_drop_target_label">معلومات التطبيق</string>
-    <string name="debug_restart_launcher">إعادة تشغيل Lawnchair</string>
+    <string name="debug_restart_launcher">إعادة تشغيل Swag</string>
     <string name="experimental_features_label">مزايا تجريبية</string>
     <!-- ExperimentalFeaturesPreferences -->
     <!-- <string name="experimental_features_label" />-->
@@ -162,7 +162,7 @@
     <string name="action_paste">لصق</string>
     <string name="copied_toast">تم نسخه إلى الحافظة.</string>
     <string name="invalid_color">لون غير صالح</string>
-    <string name="launcher_default_color">يدار بواسطة Lawnchair</string>
+    <string name="launcher_default_color">يدار بواسطة Swag</string>
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
     <string name="auto_add_shortcuts_label">إضافة التطبيقات الجديدة إلى الشاشة الرئيسة</string>
@@ -233,7 +233,7 @@
     <string name="smartspace_calendar_persian">التقويم الفارسي</string>
     <string name="smartspace_preferences">التفضيلات</string>
     <string name="smartspace_widget_toggle_label">إظهار على الشاشة الرئيسية</string>
-    <string name="smartspace_widget_toggle_description">يمكن إضافة اللمحة السريعة يدويًا عن طريق وضع أداة \"Lawnchair\".</string>
+    <string name="smartspace_widget_toggle_description">يمكن إضافة اللمحة السريعة يدويًا عن طريق وضع أداة \"Swag\".</string>
     <string name="smartspace_mode_label">مزود اللمحة السريعة</string>
     <string name="smartspace_mode_lawnchair">كرسي حديقة</string>
     <string name="smartspace_mode_google">جوجل</string>
@@ -354,10 +354,10 @@
     <string name="item_removed">أُزيلَ العنصر.</string>
     <string name="all_apps_no_search_results">لم يُعثَر على تطبيقات مطابقة لـ \"<xliff:g example="Android" id="query">%1$s</xliff:g>\".</string>
     <string name="dt2s_admin_hint_title">تحتاج إلى إذونات مشرف</string>
-    <string name="dt2s_admin_hint">لاستخدام النقرة المزدوجة لإطفاء الشاشة، عيّن Lawnchair كتطبيق مشرف للجهاز. انقر على فتح الإعدادات، ثم انقر على \"فعِّل التطبيق كمشرف على الجهاز.\"</string>
+    <string name="dt2s_admin_hint">لاستخدام النقرة المزدوجة لإطفاء الشاشة، عيّن Swag كتطبيق مشرف للجهاز. انقر على فتح الإعدادات، ثم انقر على \"فعِّل التطبيق كمشرف على الجهاز.\"</string>
     <string name="dt2s_admin_warning">Double Tap to Sleep will be disabled.</string>
     <string name="dt2s_a11y_hint_title">Accessibility service required</string>
-    <string name="dt2s_a11y_hint">لاستخدام الضغط المزدوج لإغلاق الشاشة، قم بتشغيل خدمة الوصول إلى Lawnchair. اضغط على \"فتح الإعدادات\" ثم قم باختيار \"Lawnchair\" وفعِّل \"استخدم Lawnchair\".</string>
+    <string name="dt2s_a11y_hint">لاستخدام الضغط المزدوج لإغلاق الشاشة، قم بتشغيل خدمة الوصول إلى Swag. اضغط على \"فتح الإعدادات\" ثم قم باختيار \"Swag\" وفعِّل \"استخدم Swag\".</string>
     <string name="dt2s_warning_open_settings">افتح الإعدادات</string>
     <string name="loading">يتم التحميل…</string>
     <string name="system">نظام</string>
@@ -366,7 +366,7 @@
     <string name="hide_from_drawer">إخفاء من قائمة التطبيقات</string>
     <string name="suggestion_pref_screen_title">اقتراحات</string>
     <!-- Bug reporting -->
-    <string name="lawnchair_bug_report">تقرير الأخطاء Lawnchair</string>
+    <string name="lawnchair_bug_report">تقرير الأخطاء Swag</string>
     <string name="crash_report_notif_title">%1$s توقف عن العمل</string>
     <string name="action_upload_crash_report">رفع سجل الأعطال</string>
     <string name="action_copy_link">نسخ الرابط</string>

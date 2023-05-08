@@ -24,6 +24,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Process
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.util.SingletonHolder
 import app.lawnchair.util.ensureOnMainThread
@@ -39,7 +41,7 @@ class FeedBridge(private val context: Context) {
     private val bridgePackages by lazy {
         listOf(
             PixelBridgeInfo("com.google.android.apps.nexuslauncher", R.integer.bridge_signature_hash),
-            BridgeInfo("app.lawnchair.lawnfeed", R.integer.lawnfeed_signature_hash)
+            BridgeInfo("me.oriley.swagfeed", R.integer.swagfeed_signature_hash)
         )
     }
 
@@ -166,5 +168,14 @@ class FeedBridge(private val context: Context) {
 
         @JvmStatic
         fun useBridge(context: Context) = getInstance(context).let { it.shouldUseFeed || it.customBridgeAvailable() }
+
+        fun isInstalled(context: Context): LiveData<Boolean> = getInstance(context).let {
+            val isInstalled = it.isInstalled()
+            isInstalledData.value = isInstalled
+            isInstalledData
+        }
+
+        /** Cache latest result to simplify updating composable */
+        private val isInstalledData = MutableLiveData<Boolean>()
     }
 }

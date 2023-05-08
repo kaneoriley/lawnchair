@@ -23,6 +23,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.WindowCompat
+import app.lawnchair.FeedBridge
 import app.lawnchair.ui.theme.LawnchairTheme
 
 class PreferenceActivity : AppCompatActivity() {
@@ -34,6 +35,11 @@ class PreferenceActivity : AppCompatActivity() {
                 Preferences()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        FeedBridge.isInstalled(this)
     }
 
     companion object {

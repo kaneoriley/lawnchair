@@ -16,7 +16,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- PreferenceDashboard -->
-    <string name="set_default_launcher_tip">Lawnchair को अपने डिफ़ॉल्ट लॉन्चर के रूप में सेट करने के लिए इस कार्ड को टैप करें।</string>
+    <string name="set_default_launcher_tip">Swag को अपने डिफ़ॉल्ट लॉन्चर के रूप में सेट करने के लिए इस कार्ड को टैप करें।</string>
     <string name="settings">सेटिंग्स</string>
     <string name="general_label">सामान्य</string>
     <string name="general_description">नोटिफिकेशन डॉट्स, आइकन पैक</string>
@@ -162,7 +162,7 @@
     <string name="action_paste">पेस्ट</string>
     <string name="copied_toast">क्लिपबोर्ड पर कॉपी हो गया</string>
     <string name="invalid_color">अमान्य रंग।</string>
-    <string name="launcher_default_color">Lawnchair द्वारा प्रबंधित</string>
+    <string name="launcher_default_color">Swag द्वारा प्रबंधित</string>
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
     <string name="auto_add_shortcuts_label">होम स्क्रीन पर नए ऐप्स जोड़ें</string>
@@ -233,16 +233,16 @@
     <string name="smartspace_calendar_persian">फ़ारसी</string>
     <string name="smartspace_preferences">पसंद</string>
     <string name="smartspace_widget_toggle_label">होम स्क्रीन पर दिखाएं</string>
-    <string name="smartspace_widget_toggle_description">एक नज़र में \"Lawnchair\" विजेट रखकर मैन्युअल रूप से जोड़ा जा सकता है।</string>
+    <string name="smartspace_widget_toggle_description">एक नज़र में \"Swag\" विजेट रखकर मैन्युअल रूप से जोड़ा जा सकता है।</string>
     <string name="smartspace_mode_label">ऐट अ ग्लैन्स प्रदाता</string>
-    <string name="smartspace_mode_lawnchair">Lawnchair</string>
+    <string name="smartspace_mode_lawnchair">Swag</string>
     <string name="smartspace_mode_google">गूगल</string>
     <string name="smartspace_mode_google_search">गूगल खोज</string>
     <!-- DockPreferences -->
     <!-- <string name="dock_label" /> -->
     <string name="hotseat_mode_label">सर्च बार विजेट</string>
     <string name="hotseat_mode_disabled">अक्षम करें</string>
-    <string name="hotseat_mode_lawnchair">Lawnchair</string>
+    <string name="hotseat_mode_lawnchair">Swag</string>
     <string name="hotseat_mode_google_search">गूगल सर्च बार</string>
     <string name="search_bar_label">सर्च बार</string>
     <string name="corner_radius_label">किनारे</string>

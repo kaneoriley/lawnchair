@@ -162,7 +162,7 @@
     <string name="action_paste">পোস্ট</string>
     <string name="copied_toast">ক্লিপবোর্ডে কপি করা হয়েছে।</string>
     <string name="invalid_color">অবৈধ রং</string>
-    <string name="launcher_default_color">Lawnchair দ্বারা পরিচালিত করা হবে</string>
+    <string name="launcher_default_color">Swag দ্বারা পরিচালিত করা হবে</string>
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
     <string name="auto_add_shortcuts_label">মূল পর্দায় নতুন অ্যাপ যোগ করুন</string>
@@ -233,16 +233,16 @@
     <string name="smartspace_calendar_persian">পার্সিয়ান</string>
     <string name="smartspace_preferences">পছন্দ-সমুহ</string>
     <string name="smartspace_widget_toggle_label">প্রধান স্ক্রীনে দেখান</string>
-    <string name="smartspace_widget_toggle_description">At a Glance can be manually added by placing the \"Lawnchair\" widget.</string>
+    <string name="smartspace_widget_toggle_description">At a Glance can be manually added by placing the \"Swag\" widget.</string>
     <string name="smartspace_mode_label">At a Glance Provider</string>
-    <string name="smartspace_mode_lawnchair">Lawnchair</string>
+    <string name="smartspace_mode_lawnchair">Swag</string>
     <string name="smartspace_mode_google">Google</string>
     <string name="smartspace_mode_google_search">Google Search</string>
     <!-- DockPreferences -->
     <!-- <string name="dock_label" /> -->
     <string name="hotseat_mode_label">Search Bar Widget</string>
     <string name="hotseat_mode_disabled">Disabled</string>
-    <string name="hotseat_mode_lawnchair">Lawnchair</string>
+    <string name="hotseat_mode_lawnchair">Swag</string>
     <string name="hotseat_mode_google_search">Google Search Bar</string>
     <string name="search_bar_label">সার্চ বার</string>
     <string name="corner_radius_label">কোণের ব্যাসার্ধ</string>
@@ -362,7 +362,7 @@
     <string name="hide_from_drawer">অ্যাপ ড্রয়ার থেকে লুকান</string>
     <string name="suggestion_pref_screen_title">পরামর্শ</string>
     <!-- Bug reporting -->
-    <string name="lawnchair_bug_report">Lawnchair বাগ রিপোর্ট</string>
+    <string name="lawnchair_bug_report">Swag বাগ রিপোর্ট</string>
     <string name="crash_report_notif_title">%1$s সমস্যা হয়েছে</string>
     <string name="action_upload_crash_report">সমস্যার উৎস আপলোড করুন</string>
     <string name="action_copy_link">লিংক কপি করুন</string>

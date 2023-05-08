@@ -16,7 +16,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- PreferenceDashboard -->
-    <string name="set_default_launcher_tip">Tap this card to set Lawnchair as your default launcher.</string>
+    <string name="set_default_launcher_tip">Tap this card to set Swag as your default launcher.</string>
     <string name="settings">Nustatymai</string>
     <string name="general_label">Pagrindinis</string>
     <string name="general_description">Pranešimu taškai, Ikonu Paketas</string>
@@ -40,7 +40,7 @@
     <!-- <string name="version" /> (unknown source) -->
     <!-- PreferencesOverflowMenu() in PreferencesDashboard -->
     <string name="app_info_drop_target_label">Programelės Informacija</string>
-    <string name="debug_restart_launcher">Iš Naujo Paleiskite \"Lawnchair\"</string>
+    <string name="debug_restart_launcher">Iš Naujo Paleiskite \"Swag\"</string>
     <string name="experimental_features_label">Expermentinės funkcijos</string>
     <!-- ExperimentalFeaturesPreferences -->
     <!-- <string name="experimental_features_label" />-->
@@ -162,7 +162,7 @@
     <string name="action_paste">Įklijuoti</string>
     <string name="copied_toast">Nukopijuota į iškarpinę.</string>
     <string name="invalid_color">Netinkama Spalva</string>
-    <string name="launcher_default_color">Valdoma „Lawnchair“</string>
+    <string name="launcher_default_color">Valdoma „Swag“</string>
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
     <string name="auto_add_shortcuts_label">Pridėkite Naujas Programas į Namu Ekrana</string>
@@ -233,16 +233,16 @@
     <string name="smartspace_calendar_persian">Persų</string>
     <string name="smartspace_preferences">Parinktys</string>
     <string name="smartspace_widget_toggle_label">Rodyti Pagrindiniame Ekrane</string>
-    <string name="smartspace_widget_toggle_description">„At a Glance“ galima pridėti rankiniu būdu, įdėjus „Lawnchair“ valdiklį.</string>
+    <string name="smartspace_widget_toggle_description">„At a Glance“ galima pridėti rankiniu būdu, įdėjus „Swag“ valdiklį.</string>
     <string name="smartspace_mode_label">„At a Glance“ Teikėjas</string>
-    <string name="smartspace_mode_lawnchair">Lawnchair</string>
+    <string name="smartspace_mode_lawnchair">Swag</string>
     <string name="smartspace_mode_google">Google</string>
     <string name="smartspace_mode_google_search">Google Paieška</string>
     <!-- DockPreferences -->
     <!-- <string name="dock_label" /> -->
     <string name="hotseat_mode_label">Paieškos Juostos Valdiklis</string>
     <string name="hotseat_mode_disabled">Išjungta</string>
-    <string name="hotseat_mode_lawnchair">Lawnchair</string>
+    <string name="hotseat_mode_lawnchair">Swag</string>
     <string name="hotseat_mode_google_search">Google Paieškos Juosta</string>
     <string name="search_bar_label">Paieškos Juosta</string>
     <string name="corner_radius_label">Kampų Spindulys</string>
@@ -352,10 +352,10 @@
     <string name="item_removed">Elementas pašalintas.</string>
     <string name="all_apps_no_search_results">Nerasta programelių atitinkančių „<xliff:g example="Android" id="query">%1$s</xliff:g>“.</string>
     <string name="dt2s_admin_hint_title">Reikalinga Administratoriaus Prieiga</string>
-    <string name="dt2s_admin_hint">Jei norite naudoti dvigubą paspaudimą miegojimui, nustatykite „Lawnchair“ programelę kaip prietaiso administratoriaus programėlę. Paspauskite Atidaryti Nustatymus, po to paspauskite „Aktivuoti šią prietaiso administratoriaus programėlę.“</string>
+    <string name="dt2s_admin_hint">Jei norite naudoti dvigubą paspaudimą miegojimui, nustatykite „Swag“ programelę kaip prietaiso administratoriaus programėlę. Paspauskite Atidaryti Nustatymus, po to paspauskite „Aktivuoti šią prietaiso administratoriaus programėlę.“</string>
     <string name="dt2s_admin_warning">Dvigubas paspaudimas miegojimui bus išjungtas.</string>
     <string name="dt2s_a11y_hint_title">Įjunkite Prieinamumo Paslaugą</string>
-    <string name="dt2s_a11y_hint">Jei norite naudoti „Double-Tap to Sleep“, įjunkite „Lawnchair“ prieinamumo paslaugą. Bakstelėkite „Atidaryti nustatymus“, tada pasirinkite „Lawnchair“ ir įjunkite „Naudoti Lawnchair“.</string>
+    <string name="dt2s_a11y_hint">Jei norite naudoti „Double-Tap to Sleep“, įjunkite „Swag“ prieinamumo paslaugą. Bakstelėkite „Atidaryti nustatymus“, tada pasirinkite „Swag“ ir įjunkite „Naudoti Swag“.</string>
     <string name="dt2s_warning_open_settings">Atidaryti nustatymus</string>
     <string name="loading">Kraunasi…</string>
     <string name="system">Sistema</string>
@@ -364,7 +364,7 @@
     <string name="hide_from_drawer">Paslėpti iš Programų Sąrašo</string>
     <string name="suggestion_pref_screen_title">Pasiūlymai</string>
     <!-- Bug reporting -->
-    <string name="lawnchair_bug_report">„Lawnchair“ problemų pranešimas</string>
+    <string name="lawnchair_bug_report">„Swag“ problemų pranešimas</string>
     <string name="crash_report_notif_title">%1$s Užlūžo</string>
     <string name="action_upload_crash_report">Įkelti Gedimo Įrašą</string>
     <string name="action_copy_link">Nukopijuoti Nuorodą</string>

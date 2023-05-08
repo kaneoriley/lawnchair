@@ -22,6 +22,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -224,7 +225,13 @@ fun About() {
         label = stringResource(id = R.string.about_label),
     ) {
         Column(
-            modifier = Modifier.padding(top = 8.dp),
+            modifier = Modifier.clickable(
+                enabled = true,
+                onClick = {
+                    val url = "https://github.com/kaneoriley/lawnchair"
+                    context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+                }
+            ).padding(top = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -247,13 +254,6 @@ fun About() {
                 text = BuildConfig.VERSION_DISPLAY_NAME,
                 style = MaterialTheme.typography.bodyLarge,
                 color = LocalContentColor.current.copy(alpha = ContentAlpha.medium),
-                modifier = Modifier.combinedClickable(
-                    onClick = {},
-                    onLongClick = {
-                        val commitUrl = "https://github.com/LawnchairLauncher/lawnchair/commit/${BuildConfig.COMMIT_HASH}"
-                        context.startActivity(Intent(Intent.ACTION_VIEW, commitUrl.toUri()))
-                    }
-                )
             )
             Spacer(modifier = Modifier.requiredHeight(16.dp))
             Row(
@@ -261,14 +261,15 @@ fun About() {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
             ) {
-                links.forEach { link ->
-                    LawnchairLink(
-                        iconResId = link.iconResId,
-                        label = stringResource(id = link.labelResId),
-                        modifier = Modifier.weight(weight = 1f),
-                        url = link.url,
-                    )
-                }
+                // The links aren't relevant for a fork, so hide.
+//                links.forEach { link ->
+//                    LawnchairLink(
+//                        iconResId = link.iconResId,
+//                        label = stringResource(id = link.labelResId),
+//                        modifier = Modifier.weight(weight = 1f),
+//                        url = link.url,
+//                    )
+//                }
             }
         }
         PreferenceGroup(heading = stringResource(id = R.string.derived_app_name)) {

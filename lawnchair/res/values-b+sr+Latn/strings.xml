@@ -16,7 +16,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- PreferenceDashboard -->
-    <string name="set_default_launcher_tip">Tap this card to set Lawnchair as your default launcher.</string>
+    <string name="set_default_launcher_tip">Tap this card to set Swag as your default launcher.</string>
     <string name="settings">Podešavanja</string>
     <string name="general_label">Opšte</string>
     <string name="general_description">Boje, paketi ikona i tačke za obaveštenja</string>
@@ -40,7 +40,7 @@
     <!-- <string name="version" /> (unknown source) -->
     <!-- PreferencesOverflowMenu() in PreferencesDashboard -->
     <string name="app_info_drop_target_label">Informacije o aplikaciji</string>
-    <string name="debug_restart_launcher">Restartuj Lawnchair</string>
+    <string name="debug_restart_launcher">Restartuj Swag</string>
     <string name="experimental_features_label">Eksperimentalne funkcije</string>
     <!-- ExperimentalFeaturesPreferences -->
     <!-- <string name="experimental_features_label" />-->
@@ -162,7 +162,7 @@
     <string name="action_paste">Nalepi</string>
     <string name="copied_toast">Kopirano u privremenu memoriju.</string>
     <string name="invalid_color">Nevažeća boja</string>
-    <string name="launcher_default_color">Upravlja aplikacija Lawnchair</string>
+    <string name="launcher_default_color">Upravlja aplikacija Swag</string>
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
     <string name="auto_add_shortcuts_label">Dodaj nove aplikacije na početni ekran</string>
@@ -233,16 +233,16 @@
     <string name="smartspace_calendar_persian">Persijski</string>
     <string name="smartspace_preferences">Podešavanja</string>
     <string name="smartspace_widget_toggle_label">Prikaži na početnom ekranu</string>
-    <string name="smartspace_widget_toggle_description">„Kratak pregled” možete da dodate ručno postavljanjem vidžeta „Lawnchair”.</string>
+    <string name="smartspace_widget_toggle_description">„Kratak pregled” možete da dodate ručno postavljanjem vidžeta „Swag”.</string>
     <string name="smartspace_mode_label">Dobavljač za „Kratak pregled”</string>
-    <string name="smartspace_mode_lawnchair">Lawnchair</string>
+    <string name="smartspace_mode_lawnchair">Swag</string>
     <string name="smartspace_mode_google">Google</string>
     <string name="smartspace_mode_google_search">Google pretraga</string>
     <!-- DockPreferences -->
     <!-- <string name="dock_label" /> -->
     <string name="hotseat_mode_label">Vidžet trake za pretragu</string>
     <string name="hotseat_mode_disabled">Onemogućeno</string>
-    <string name="hotseat_mode_lawnchair">Lawnchair</string>
+    <string name="hotseat_mode_lawnchair">Swag</string>
     <string name="hotseat_mode_google_search">Google traka za pretragu</string>
     <string name="search_bar_label">Okvir za pretragu</string>
     <string name="corner_radius_label">Radijus ugla</string>
@@ -351,10 +351,10 @@
     <string name="item_removed">Stavka je uklonjena.</string>
     <string name="all_apps_no_search_results">Nije pronađena aplikacija koja odgovara upitu „<xliff:g example="Android" id="query">%1$s</xliff:g>”.</string>
     <string name="dt2s_admin_hint_title">Potrebne su administratorske dozvole</string>
-    <string name="dt2s_admin_hint">Da biste koristili funkciju „Dodirnite dvaput za stanje spavanja”, podesite Lawnchair kao aplikaciju za administratora uređaja. U podešavanjima dodirnite „Aktiviraj ovu aplikaciju za administratora uređaja”.</string>
+    <string name="dt2s_admin_hint">Da biste koristili funkciju „Dodirnite dvaput za stanje spavanja”, podesite Swag kao aplikaciju za administratora uređaja. U podešavanjima dodirnite „Aktiviraj ovu aplikaciju za administratora uređaja”.</string>
     <string name="dt2s_admin_warning">Funkcija „Dodirnite dvaput za stanje spavanja” će biti onemogućena.</string>
     <string name="dt2s_a11y_hint_title">Uključite uslugu pristupačnosti</string>
-    <string name="dt2s_a11y_hint">Da biste koristili funkciju „Dodirnite dvaput za stanje spavanja”, uključite uslugu pristupačnosti Lawnchaira. U podešavanjima izaberite Lawnchair i dodirnite „Koristi Lawnchair”.</string>
+    <string name="dt2s_a11y_hint">Da biste koristili funkciju „Dodirnite dvaput za stanje spavanja”, uključite uslugu pristupačnosti Swaga. U podešavanjima izaberite Swag i dodirnite „Koristi Swag”.</string>
     <string name="dt2s_warning_open_settings">Otvori podešavanja</string>
     <string name="loading">Učitavanje…</string>
     <string name="system">Sistemska</string>
@@ -363,7 +363,7 @@
     <string name="hide_from_drawer">Sakrij sa liste aplikacija</string>
     <string name="suggestion_pref_screen_title">Predlozi</string>
     <!-- Bug reporting -->
-    <string name="lawnchair_bug_report">Izveštaj o grešci u Lawnchairu</string>
+    <string name="lawnchair_bug_report">Izveštaj o grešci u Swagu</string>
     <string name="crash_report_notif_title">%1$s je otkazao</string>
     <string name="action_upload_crash_report">Otpremi evidenciju o otkazivanju</string>
     <string name="action_copy_link">Kopiraj link</string>

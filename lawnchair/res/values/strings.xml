@@ -191,6 +191,7 @@
       <!-- <string name="gesture_double_tap" /> -->
       <string name="minus_one_enable">Feed</string>
       <string name="minus_one_unavailable">No feed installed.</string>
+    <string name="minus_one_unavailable_popup">Click \'Ok\' to download the installer and add feed support.</string>
 
     <string name="wallpaper">Wallpaper</string>
       <string name="wallpaper_scrolling_label">Scroll Wallpaper</string>

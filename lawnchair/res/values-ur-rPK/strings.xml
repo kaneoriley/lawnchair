@@ -162,7 +162,7 @@
     <string name="action_paste">Paste</string>
     <string name="copied_toast">Copied to clipboard.</string>
     <string name="invalid_color">Invalid Color</string>
-    <string name="launcher_default_color">Managed by Lawnchair</string>
+    <string name="launcher_default_color">Managed by Swag</string>
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
     <string name="auto_add_shortcuts_label">ہوم اسکرین میں نئے ایپس شامل کریں۔</string>
@@ -233,16 +233,16 @@
     <string name="smartspace_calendar_persian">Persian</string>
     <string name="smartspace_preferences">ترجیحات</string>
     <string name="smartspace_widget_toggle_label">Show on Home Screen</string>
-    <string name="smartspace_widget_toggle_description">At a Glance can be manually added by placing the \"Lawnchair\" widget.</string>
+    <string name="smartspace_widget_toggle_description">At a Glance can be manually added by placing the \"Swag\" widget.</string>
     <string name="smartspace_mode_label">At a Glance Provider</string>
-    <string name="smartspace_mode_lawnchair">Lawnchair</string>
+    <string name="smartspace_mode_lawnchair">Swag</string>
     <string name="smartspace_mode_google">Google</string>
     <string name="smartspace_mode_google_search">Google Search</string>
     <!-- DockPreferences -->
     <!-- <string name="dock_label" /> -->
     <string name="hotseat_mode_label">Search Bar Widget</string>
     <string name="hotseat_mode_disabled">Disabled</string>
-    <string name="hotseat_mode_lawnchair">Lawnchair</string>
+    <string name="hotseat_mode_lawnchair">Swag</string>
     <string name="hotseat_mode_google_search">Google Search Bar</string>
     <string name="search_bar_label">Search Bar</string>
     <string name="corner_radius_label">Corner Radius</string>
@@ -350,10 +350,10 @@
     <string name="item_removed">اشیاء ہٹا دیا گیا.</string>
     <string name="all_apps_no_search_results">اس سے ملتا جلتا کوئی ایپ نہیں ملا \"<xliff:g example="Android" id="query">%1$s</xliff:g>\"۔</string>
     <string name="dt2s_admin_hint_title">Admin Permissions Required</string>
-    <string name="dt2s_admin_hint">To use Double-Tap to Sleep, set Lawnchair as a device admin app. Tap Open Settings, then tap “Activate this device admin app.”</string>
+    <string name="dt2s_admin_hint">To use Double-Tap to Sleep, set Swag as a device admin app. Tap Open Settings, then tap “Activate this device admin app.”</string>
     <string name="dt2s_admin_warning">Double-Tap to Sleep will be turned off.</string>
     <string name="dt2s_a11y_hint_title">Turn on Accessibility Service</string>
-    <string name="dt2s_a11y_hint">To use Double-Tap to Sleep, turn on the Lawnchair accessibility service. Tap Open Settings, then select Lawnchair and turn on Use Lawnchair.</string>
+    <string name="dt2s_a11y_hint">To use Double-Tap to Sleep, turn on the Swag accessibility service. Tap Open Settings, then select Swag and turn on Use Swag.</string>
     <string name="dt2s_warning_open_settings">ترتیبات کھولیں</string>
     <string name="loading">Loading…</string>
     <string name="system">System</string>
@@ -362,7 +362,7 @@
     <string name="hide_from_drawer">Hide from App Drawer</string>
     <string name="suggestion_pref_screen_title">Suggestions</string>
     <!-- Bug reporting -->
-    <string name="lawnchair_bug_report">Lawnchair Bug Report</string>
+    <string name="lawnchair_bug_report">Swag Bug Report</string>
     <string name="crash_report_notif_title">%1$s Crashed</string>
     <string name="action_upload_crash_report">Upload Crash Log</string>
     <string name="action_copy_link">Copy Link</string>

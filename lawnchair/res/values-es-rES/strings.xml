@@ -16,7 +16,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- PreferenceDashboard -->
-    <string name="set_default_launcher_tip">Toca esta tarjeta para establecer Lawnchair como tu lanzador predeterminado.</string>
+    <string name="set_default_launcher_tip">Toca esta tarjeta para establecer Swag como tu lanzador predeterminado.</string>
     <string name="settings">Ajustes</string>
     <string name="general_label">General</string>
     <string name="general_description">Colores, Paquete de Íconos, Puntos de Notificación</string>
@@ -40,7 +40,7 @@
     <!-- <string name="version" /> (unknown source) -->
     <!-- PreferencesOverflowMenu() in PreferencesDashboard -->
     <string name="app_info_drop_target_label">Información de la aplicación</string>
-    <string name="debug_restart_launcher">Reiniciar Lawnchair</string>
+    <string name="debug_restart_launcher">Reiniciar Swag</string>
     <string name="experimental_features_label">Características experimentales</string>
     <!-- ExperimentalFeaturesPreferences -->
     <!-- <string name="experimental_features_label" />-->
@@ -162,7 +162,7 @@
     <string name="action_paste">Pegar</string>
     <string name="copied_toast">Copiado al portapapeles.</string>
     <string name="invalid_color">Color no válido</string>
-    <string name="launcher_default_color">Gestionado por Lawnchair</string>
+    <string name="launcher_default_color">Gestionado por Swag</string>
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
     <string name="auto_add_shortcuts_label">Añadir Nuevas Aplicaciones a la Pantalla de Inicio</string>
@@ -233,16 +233,16 @@
     <string name="smartspace_calendar_persian">Persa</string>
     <string name="smartspace_preferences">Preferencias</string>
     <string name="smartspace_widget_toggle_label">Mostrar en la pantalla de inicio</string>
-    <string name="smartspace_widget_toggle_description">De un vistazo se puede agregar manualmente colocando el widget \"Lawnchair\".</string>
+    <string name="smartspace_widget_toggle_description">De un vistazo se puede agregar manualmente colocando el widget \"Swag\".</string>
     <string name="smartspace_mode_label">Proveedor de un vistazo</string>
-    <string name="smartspace_mode_lawnchair">Lawnchair</string>
+    <string name="smartspace_mode_lawnchair">Swag</string>
     <string name="smartspace_mode_google">Google</string>
     <string name="smartspace_mode_google_search">Búsqueda de Google</string>
     <!-- DockPreferences -->
     <!-- <string name="dock_label" /> -->
     <string name="hotseat_mode_label">Widget de barra de búsqueda</string>
     <string name="hotseat_mode_disabled">Deshabilitado</string>
-    <string name="hotseat_mode_lawnchair">Lawnchair</string>
+    <string name="hotseat_mode_lawnchair">Swag</string>
     <string name="hotseat_mode_google_search">Barra de búsqueda de Google</string>
     <string name="search_bar_label">Barra de Búsqueda</string>
     <string name="corner_radius_label">Radio de esquina</string>
@@ -350,10 +350,10 @@
     <string name="item_removed">Elemento eliminado.</string>
     <string name="all_apps_no_search_results">No se encontraron aplicaciones que coincidan con “<xliff:g example="Android" id="query">%1$s</xliff:g>”.</string>
     <string name="dt2s_admin_hint_title">Permisos de administrador requeridos</string>
-    <string name="dt2s_admin_hint">Para usar el doble toque para apagar la pantalla, establece Lawnchair como una app de administrador de dispositivos. Pulsa en \"Abrir Configuración\", luego en \"Activar esta aplicación de administrador de dispositivos.\"</string>
+    <string name="dt2s_admin_hint">Para usar el doble toque para apagar la pantalla, establece Swag como una app de administrador de dispositivos. Pulsa en \"Abrir Configuración\", luego en \"Activar esta aplicación de administrador de dispositivos.\"</string>
     <string name="dt2s_admin_warning">Se desactivará el doble toque para dormir.</string>
     <string name="dt2s_a11y_hint_title">Activar el servicio de accesibilidad</string>
-    <string name="dt2s_a11y_hint">Para usar el doble toque para apagar la pantalla, activa el servicio de accesibilidad de Lawnchair. Toca en \"Abrir Configuración\", luego selecciona \"Lawnchair\" y activa \"Usar Lawnchair\".</string>
+    <string name="dt2s_a11y_hint">Para usar el doble toque para apagar la pantalla, activa el servicio de accesibilidad de Swag. Toca en \"Abrir Configuración\", luego selecciona \"Swag\" y activa \"Usar Swag\".</string>
     <string name="dt2s_warning_open_settings">Abrir configuración</string>
     <string name="loading">Cargando…</string>
     <string name="system">Sistema</string>
@@ -362,7 +362,7 @@
     <string name="hide_from_drawer">Ocultar del Cajón</string>
     <string name="suggestion_pref_screen_title">Sugerencias</string>
     <!-- Bug reporting -->
-    <string name="lawnchair_bug_report">Reporte de errores de Lawnchair</string>
+    <string name="lawnchair_bug_report">Reporte de errores de Swag</string>
     <string name="crash_report_notif_title">%1$s ha dejado de funcionar</string>
     <string name="action_upload_crash_report">Cargar registro de error</string>
     <string name="action_copy_link">Copiar enlace</string>

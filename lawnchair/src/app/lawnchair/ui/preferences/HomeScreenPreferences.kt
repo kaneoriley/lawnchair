@@ -16,15 +16,18 @@
 
 package app.lawnchair.ui.preferences
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
+import app.lawnchair.FeedBridge
 import app.lawnchair.data.iconoverride.IconOverrideRepository
-import app.lawnchair.nexuslauncher.OverlayCallbackImpl
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
@@ -73,13 +76,27 @@ fun HomeScreenPreferences() {
                 adapter = prefs2.doubleTapGestureHandler.getAdapter(),
                 label = stringResource(id = R.string.gesture_double_tap),
             )
-            val feedAvailable = OverlayCallbackImpl.minusOneAvailable(LocalContext.current)
-            SwitchPreference(
-                adapter = prefs2.enableFeed.getAdapter(),
-                label = stringResource(id = R.string.minus_one_enable),
-                description = if (feedAvailable) null else stringResource(id = R.string.minus_one_unavailable),
-                enabled = feedAvailable,
-            )
+            val context = LocalContext.current
+            val feedAvailable = FeedBridge.isInstalled(LocalContext.current).observeAsState()
+            if (feedAvailable.value == true) {
+                SwitchPreference(
+                    adapter = prefs2.enableFeed.getAdapter(),
+                    label = stringResource(id = R.string.minus_one_enable),
+                )
+            } else {
+                ClickablePreference(
+                    label = stringResource(id = R.string.minus_one_enable),
+                    subtitle = stringResource(id = R.string.minus_one_unavailable),
+                    confirmationText = stringResource(id = R.string.minus_one_unavailable_popup),
+                    onClick = {
+                        val webpage = Uri.parse("https://github.com/kaneoriley/lawnfeed/releases/tag/1.0")
+                        val intent = Intent(Intent.ACTION_VIEW, webpage)
+                        if (intent.resolveActivity(context.packageManager) != null) {
+                            context.startActivity(intent)
+                        }
+                    }
+                )
+            }
             HomeScreenTextColorPreference()
         }
         PreferenceGroup(heading = stringResource(id = R.string.wallpaper)) {

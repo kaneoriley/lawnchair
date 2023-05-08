@@ -16,7 +16,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- PreferenceDashboard -->
-    <string name="set_default_launcher_tip">Tap this card to set Lawnchair as your default launcher.</string>
+    <string name="set_default_launcher_tip">Tap this card to set Swag as your default launcher.</string>
     <string name="settings">Beállítások</string>
     <string name="general_label">Általános</string>
     <string name="general_description">Színek, ikoncsomag, értesítési pöttyök</string>
@@ -40,7 +40,7 @@
     <!-- <string name="version" /> (unknown source) -->
     <!-- PreferencesOverflowMenu() in PreferencesDashboard -->
     <string name="app_info_drop_target_label">Alkalmazásinfó</string>
-    <string name="debug_restart_launcher">Lawnchair Újraindítása</string>
+    <string name="debug_restart_launcher">Swag Újraindítása</string>
     <string name="experimental_features_label">Kísérleti funkciók</string>
     <!-- ExperimentalFeaturesPreferences -->
     <!-- <string name="experimental_features_label" />-->
@@ -162,7 +162,7 @@
     <string name="action_paste">Beilleszt</string>
     <string name="copied_toast">Vágólapra másolva.</string>
     <string name="invalid_color">Érvénytelen szín</string>
-    <string name="launcher_default_color">Lawnchair által kezelve</string>
+    <string name="launcher_default_color">Swag által kezelve</string>
     <!-- HomeScreenPreferences -->
     <!-- <string name="general_label" /> -->
     <string name="auto_add_shortcuts_label">Új alkalmazások hozzáadása a kezdőképernyőhöz</string>
@@ -233,16 +233,16 @@
     <string name="smartspace_calendar_persian">Perzsa</string>
     <string name="smartspace_preferences">Beállítások</string>
     <string name="smartspace_widget_toggle_label">Mutatás kezdőlapon</string>
-    <string name="smartspace_widget_toggle_description">Az At a Glance manuálisan is hozzáadható a kezdőlaphoz a \"Lawnchair\" widgettel.</string>
+    <string name="smartspace_widget_toggle_description">Az At a Glance manuálisan is hozzáadható a kezdőlaphoz a \"Swag\" widgettel.</string>
     <string name="smartspace_mode_label">At a Glance szolgáltató kiválasztása</string>
-    <string name="smartspace_mode_lawnchair">Lawnchair</string>
+    <string name="smartspace_mode_lawnchair">Swag</string>
     <string name="smartspace_mode_google">Google</string>
     <string name="smartspace_mode_google_search">Google Keresés</string>
     <!-- DockPreferences -->
     <!-- <string name="dock_label" /> -->
     <string name="hotseat_mode_label">Keresősáv widget</string>
     <string name="hotseat_mode_disabled">Letiltva</string>
-    <string name="hotseat_mode_lawnchair">Lawnchair</string>
+    <string name="hotseat_mode_lawnchair">Swag</string>
     <string name="hotseat_mode_google_search">Google Keresősáv</string>
     <string name="search_bar_label">Kereső sáv</string>
     <string name="corner_radius_label">Sarok sugár</string>
@@ -350,10 +350,10 @@
     <string name="item_removed">Elem eltávolítva.</string>
     <string name="all_apps_no_search_results">Nincs megfelelő alkalmazás erre \"<xliff:g example="Android" id="query">%1$s</xliff:g>”.</string>
     <string name="dt2s_admin_hint_title">Rendszergazdai jogosultság szükséges</string>
-    <string name="dt2s_admin_hint">A dupla koppintásos altatáshoz állítsa be a Lawnchairt rendszergadai alkalmazásként. Koppintson a Beállítások megnyitására, majd koppintson a „Rendszergazdai alkalmazás aktiválása” lehetőségre.</string>
+    <string name="dt2s_admin_hint">A dupla koppintásos altatáshoz állítsa be a Swagt rendszergadai alkalmazásként. Koppintson a Beállítások megnyitására, majd koppintson a „Rendszergazdai alkalmazás aktiválása” lehetőségre.</string>
     <string name="dt2s_admin_warning">A dupla koppintásos alvás ki lesz kapcsolva.</string>
     <string name="dt2s_a11y_hint_title">Akadálymentesítési szolgáltatás bekapcsolása</string>
-    <string name="dt2s_a11y_hint">A dupla koppintásos alvás bekapcsolásához kapcsolja be a Lawnchair akadálymentesítési szolgáltatást. Koppintson a „Beállítások megnyitása” gombra, majd válassza a „Lawnchair” lehetőséget, és kapcsolja be ezt: „Lawnchair használata\".</string>
+    <string name="dt2s_a11y_hint">A dupla koppintásos alvás bekapcsolásához kapcsolja be a Swag akadálymentesítési szolgáltatást. Koppintson a „Beállítások megnyitása” gombra, majd válassza a „Swag” lehetőséget, és kapcsolja be ezt: „Swag használata\".</string>
     <string name="dt2s_warning_open_settings">Beállítások megnyitása</string>
     <string name="loading">Betöltés…</string>
     <string name="system">Rendszer</string>
@@ -362,7 +362,7 @@
     <string name="hide_from_drawer">Elrejtés az alkalmazásfiókban</string>
     <string name="suggestion_pref_screen_title">Javaslatok</string>
     <!-- Bug reporting -->
-    <string name="lawnchair_bug_report">Lawnchair hibajelentés</string>
+    <string name="lawnchair_bug_report">Swag hibajelentés</string>
     <string name="crash_report_notif_title">%1$s összeomlott</string>
     <string name="action_upload_crash_report">Összeomlási napló feltöltése</string>
     <string name="action_copy_link">Link másolása</string>
