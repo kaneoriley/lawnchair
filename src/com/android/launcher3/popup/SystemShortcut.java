@@ -4,6 +4,7 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_SYSTEM_SHORTCUT_WIDGETS_TAP;
 
 import android.app.ActivityOptions;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -263,10 +265,11 @@ public abstract class SystemShortcut<T extends Context & ActivityContext> extend
                 Intent intent = Intent.parseUri(view.getContext().getString(R.string.delete_package_intent), 0)
                     .setData(Uri.fromParts("package", mItemInfo.getTargetComponent().getPackageName(),
                     mItemInfo.getTargetComponent().getClassName())).putExtra(Intent.EXTRA_USER, mItemInfo.user);
-                mTarget.startActivitySafely(view, intent, mItemInfo);
+                // Delete package needs to be run by the process user, startActivitySafely breaks this.
+                mTarget.startActivity(intent);
                 AbstractFloatingView.closeAllOpenViews(mTarget);
-            } catch (URISyntaxException e) {
-                // Do nothing.
+            } catch (ActivityNotFoundException | URISyntaxException e) {
+                Toast.makeText(mTarget, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
             }
         }
     }

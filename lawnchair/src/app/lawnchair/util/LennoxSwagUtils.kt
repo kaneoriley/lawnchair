@@ -7,6 +7,8 @@ import android.net.Uri
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
 import com.android.launcher3.LauncherAppState
+import com.android.launcher3.LauncherSettings.Favorites
+import com.android.launcher3.model.data.ItemInfo
 
 fun Context.startOrRequestInstall(packageName: String, intent: Intent) {
     if (packageManager.resolveActivity(intent, 0) != null) {
@@ -33,3 +35,7 @@ fun getPrefs(): PreferenceManager {
 fun getPrefs2(): PreferenceManager2 {
     return PreferenceManager2.getInstance(LauncherAppState.INSTANCE.noCreate.context)
 }
+
+/** Detect if an item is a duplicate for the purposes of all apps mode cleanup. */
+fun ItemInfo.isAllAppsModeDuplicate(other: ItemInfo) = itemType == Favorites.ITEM_TYPE_APPLICATION && other.itemType == Favorites.ITEM_TYPE_APPLICATION &&
+    targetComponent?.toString() == other.targetComponent?.toString() && user == other.user

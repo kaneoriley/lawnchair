@@ -28,6 +28,7 @@ import static com.android.launcher3.util.PackageManagerHelper.hasShortcutsPermis
 import static com.android.launcher3.util.PackageManagerHelper.isSystemApp;
 
 import static app.lawnchair.util.LennoxSwagUtilsKt.getPrefs2;
+import static app.lawnchair.util.LennoxSwagUtilsKt.isAllAppsModeDuplicate;
 
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetProviderInfo;
@@ -342,23 +343,16 @@ public class LoaderTask implements Runnable {
         // Add missing apps to workspace and db if in all apps mode, and remove duplicates.
         if (PreferenceExtensionsKt.firstBlocking(getPrefs2().getAllAppsOnHome()) && mBgAllAppsList != null) {
             List<Pair<ItemInfo, Object>> missingItems = new ArrayList<>();
-            List<String> duplicatedComponents = new ArrayList<>();
             List<ItemInfo> pendingDeletionItems = new ArrayList<>();
 
             for (AppInfo appInfo : mBgAllAppsList.data) {
                 boolean hasWorkspaceItem = false;
-                String appTargetName = appInfo.getTargetComponent() != null ? appInfo.getTargetComponent().toString() : null;
-
                 // Check folders now
                 for (FolderInfo folderInfo : mBgDataModel.folders) {
                     for (ItemInfo itemInfo : folderInfo.contents) {
                         if (itemInfo.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
-                            String itemTargetName = itemInfo.getTargetComponent() != null ? itemInfo.getTargetComponent().toString() : null;
-                            if (itemTargetName != null && itemTargetName.equals(appTargetName)) {
+                            if (isAllAppsModeDuplicate(appInfo, itemInfo)) {
                                 if (hasWorkspaceItem) {
-                                    if (!duplicatedComponents.contains(itemTargetName)) {
-                                        duplicatedComponents.add(itemTargetName);
-                                    }
                                     if (!pendingDeletionItems.contains(itemInfo)) pendingDeletionItems.add(itemInfo);
                                 } else {
                                     hasWorkspaceItem = true;
@@ -370,12 +364,8 @@ public class LoaderTask implements Runnable {
 
                 for (ItemInfo itemInfo : mBgDataModel.workspaceItems) {
                     if (itemInfo.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
-                        String itemTargetName = itemInfo.getTargetComponent() != null ? itemInfo.getTargetComponent().toString() : null;
-                        if (itemTargetName != null && itemTargetName.equals(appTargetName)) {
+                        if (isAllAppsModeDuplicate(appInfo, itemInfo)) {
                             if (hasWorkspaceItem) {
-                                if (!duplicatedComponents.contains(itemTargetName)) {
-                                    duplicatedComponents.add(itemTargetName);
-                                }
                                 if (!pendingDeletionItems.contains(itemInfo)) pendingDeletionItems.add(itemInfo);
                             } else {
                                 hasWorkspaceItem = true;

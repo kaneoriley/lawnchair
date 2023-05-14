@@ -6,7 +6,7 @@ import app.lawnchair.LawnchairLauncher
 class OpenAppSearchGestureHandler(context: Context) : OpenAppDrawerGestureHandler(context) {
 
     override suspend fun onTrigger(launcher: LawnchairLauncher) {
-        super.onTrigger(launcher)
         launcher.appsView.searchUiManager.editText?.showKeyboard()
+        super.onTrigger(launcher)
     }
 }
