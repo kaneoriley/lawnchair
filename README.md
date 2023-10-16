@@ -1,4 +1,4 @@
-# Swag 1.0 (based on Lawnchair 12.1)
+# Swag 1.0.1 (based on Lawnchair 12.1)
 
 Forked version of Lawnchair with support for forcing all apps on homescreen. I couldn't find a nice looking launcher that had this option, as well as leaving the app drawer left intact, so I decided to make it myself and Lawnchair was the closest thing to the stock Pixel launcher I could find.
 
