@@ -62,6 +62,7 @@ import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherModel;
+import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.LauncherSettings.Settings;
 import com.android.launcher3.Utilities;
@@ -390,7 +391,7 @@ public class LoaderTask implements Runnable {
                                 removedIds.add(info.id);
                             }
                         }
-                        deleteAndBindComponentsRemoved(ItemInfoMatcher.ofItemIds(removedIds));
+                        deleteAndBindComponentsRemoved(ItemInfoMatcher.ofItemIds(removedIds), "Removing duplicated workspace items.");
                         Log.d(TAG, "Removed duplicated workspace items.");
                     }
                 });
