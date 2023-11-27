@@ -81,7 +81,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             gIcon.setThemedIconResource(
                 resId = iconRes,
                 themed = themed || iconRes == R.drawable.ic_qsb_search,
-                method = searchProvider.themingMethod
+                method = searchProvider.themingMethod,
             )
 
             micIcon.setIcon(isGoogle, themed)
@@ -119,7 +119,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         val cellWidth = DeviceProfile.calculateCellWidth(
             requestedWidth,
             dp.cellLayoutBorderSpacePx.x,
-            dp.numShownHotseatIcons
+            dp.numShownHotseatIcons,
         )
         val iconSize = (dp.iconSizePx * 0.92f).toInt()
         val widthReduction = cellWidth - iconSize
@@ -143,7 +143,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     private fun findSearchIntent(view: AppWidgetHostView) {
         view.measure(
             MeasureSpec.makeMeasureSpec(1000, MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(100, MeasureSpec.EXACTLY)
+            MeasureSpec.makeMeasureSpec(100, MeasureSpec.EXACTLY),
         )
         searchPendingIntent = view.recursiveChildren
             .filter { it.pendingIntent != null }
@@ -176,7 +176,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     private fun setUpBackground(themed: Boolean = false) {
         val cornerRadius = getCornerRadius(context, preferenceManager)
         val color = if (themed) Themes.getColorBackgroundFloating(context) else Themes.getAttrColor(context, R.attr.qsbFillColor)
-        with (inner) {
+        with(inner) {
             clipToOutline = cornerRadius > 0
             background = PaintDrawable(color).apply {
                 setCornerRadius(cornerRadius)
@@ -190,14 +190,18 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
 
         fun getSearchProvider(
             context: Context,
-            preferenceManager: PreferenceManager2
+            preferenceManager: PreferenceManager2,
         ): QsbSearchProvider {
             val provider = preferenceManager.hotseatQsbProvider.firstBlocking()
 
             return if (provider == AppSearch ||
                 resolveIntent(context, provider.createSearchIntent()) ||
                 resolveIntent(context, provider.createWebsiteIntent())
-            ) provider else AppSearch
+            ) {
+                provider
+            } else {
+                AppSearch
+            }
         }
 
         fun resolveIntent(context: Context, intent: Intent): Boolean =
@@ -205,7 +209,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
 
         private fun getCornerRadius(
             context: Context,
-            preferenceManager: PreferenceManager
+            preferenceManager: PreferenceManager,
         ): Float {
             val resources = context.resources
             val qsbWidgetHeight = resources.getDimension(R.dimen.qsb_widget_height)

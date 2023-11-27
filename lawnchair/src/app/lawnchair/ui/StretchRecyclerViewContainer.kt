@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.launcher3.Utilities
 import com.android.launcher3.workprofile.PersonalWorkPagedView
 
-open class StretchRecyclerViewContainer @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+class StretchRecyclerViewContainer @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
 ) : StretchRelativeLayout(context, attrs, defStyleAttr) {
 
     private val childEffect = StretchEdgeEffect(context, { invalidate() }, { postInvalidateOnAnimation() })

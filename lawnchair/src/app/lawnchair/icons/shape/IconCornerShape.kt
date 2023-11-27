@@ -51,8 +51,14 @@ sealed class IconCornerShape {
             return Utilities.mapRange(controlDistance, position.controlY, position.endY)
         }
 
-        override fun addCorner(path: Path, position: Position, size: PointF, progress: Float,
-                               offsetX: Float, offsetY: Float) {
+        override fun addCorner(
+            path: Path,
+            position: Position,
+            size: PointF,
+            progress: Float,
+            offsetX: Float,
+            offsetY: Float,
+        ) {
             val controlDistanceX = Utilities.mapRange(progress, controlDistanceX, roundControlDistance)
             val controlDistanceY = Utilities.mapRange(progress, controlDistanceY, roundControlDistance)
             path.cubicTo(
@@ -61,7 +67,8 @@ sealed class IconCornerShape {
                 getControl2X(position, controlDistanceX) * size.x + offsetX,
                 getControl2Y(position, controlDistanceY) * size.y + offsetY,
                 position.endX * size.x + offsetX,
-                position.endY * size.y + offsetY)
+                position.endY * size.y + offsetY,
+            )
         }
     }
 
@@ -69,12 +76,19 @@ sealed class IconCornerShape {
 
         override val controlDistance: Float = 1f
 
-        override fun addCorner(path: Path, position: Position, size: PointF, progress: Float,
-                               offsetX: Float, offsetY: Float) {
+        override fun addCorner(
+            path: Path,
+            position: Position,
+            size: PointF,
+            progress: Float,
+            offsetX: Float,
+            offsetY: Float,
+        ) {
             if (progress == 0f) {
                 path.lineTo(
                     position.endX * size.x + offsetX,
-                    position.endY * size.y + offsetY)
+                    position.endY * size.y + offsetY,
+                )
             } else {
                 super.addCorner(path, position, size, progress, offsetX, offsetY)
             }
@@ -89,7 +103,6 @@ sealed class IconCornerShape {
 
         override fun toString(): String = "lightsquircle"
     }
-
 
     object Squircle : BaseBezierPath() {
 
@@ -112,7 +125,7 @@ sealed class IconCornerShape {
         override fun toString(): String = "ultrasquircle"
     }
 
-    object Sammy : BaseBezierPath() {
+    data object Sammy : BaseBezierPath() {
 
         override val controlDistanceX: Float = 0.4431717f
         override val controlDistanceY: Float = 0.14010102f
@@ -134,13 +147,13 @@ sealed class IconCornerShape {
                 PointF(0.5035f, 0f),
                 PointF(0.603866f, 0f),
                 PointF(0.71195f, 0.0341666f),
-                PointF(0.82995f, 0.0771166f)
+                PointF(0.82995f, 0.0771166f),
             )
             val positions = listOf(
                 Position.TopLeft,
                 Position.TopRight,
                 Position.BottomRight,
-                Position.BottomLeft
+                Position.BottomLeft,
             )
             val allScales = tmp + tmp.asReversed().map { PointF(it.y, it.x) }
             val reversedScales = allScales.asReversed()
@@ -159,8 +172,14 @@ sealed class IconCornerShape {
             }
         }
 
-        override fun addCorner(path: Path, position: Position, size: PointF, progress: Float,
-                               offsetX: Float, offsetY: Float) {
+        override fun addCorner(
+            path: Path,
+            position: Position,
+            size: PointF,
+            progress: Float,
+            offsetX: Float,
+            offsetY: Float,
+        ) {
             if (progress >= 0.55f) {
                 val sizeScale = Utilities.mapToRange(progress, 0.55f, 1f, 0.45f, 1f, LINEAR)
                 val adjustment = 1f - sizeScale
@@ -169,14 +188,16 @@ sealed class IconCornerShape {
                 val newSize = PointF(size.x * sizeScale, size.y * sizeScale)
                 path.lineTo(
                     position.startX * newSize.x + offsetX + xAdjustment,
-                    position.startY * newSize.y + offsetY + yAdjustment)
+                    position.startY * newSize.y + offsetY + yAdjustment,
+                )
                 super.addCorner(path, position, newSize, progress, offsetX + xAdjustment, offsetY + yAdjustment)
                 return
             }
             val points = points[position] ?: error("")
             path.lineTo(
                 points[0].x * size.x + offsetX,
-                points[0].y * size.y + offsetY)
+                points[0].y * size.y + offsetY,
+            )
             for (i in 1..9 step 3) {
                 path.cubicTo(
                     points[i].x * size.x + offsetX,
@@ -184,11 +205,13 @@ sealed class IconCornerShape {
                     points[i + 1].x * size.x + offsetX,
                     points[i + 1].y * size.y + offsetY,
                     points[i + 2].x * size.x + offsetX,
-                    points[i + 2].y * size.y + offsetY)
+                    points[i + 2].y * size.y + offsetY,
+                )
             }
             path.lineTo(
                 position.endX * size.x + offsetX,
-                position.endY * size.y + offsetY)
+                position.endY * size.y + offsetY,
+            )
         }
 
         override fun toString(): String = "cupertino"
@@ -205,7 +228,7 @@ sealed class IconCornerShape {
         abstract val endX: Float
         abstract val endY: Float
 
-        object TopLeft : Position() {
+        data object TopLeft : Position() {
 
             override val startX = 0f
             override val startY = 1f
@@ -215,7 +238,7 @@ sealed class IconCornerShape {
             override val endY = 0f
         }
 
-        object TopRight : Position() {
+        data object TopRight : Position() {
 
             override val startX = 0f
             override val startY = 0f
@@ -225,7 +248,7 @@ sealed class IconCornerShape {
             override val endY = 1f
         }
 
-        object BottomRight : Position() {
+        data object BottomRight : Position() {
 
             override val startX = 1f
             override val startY = 0f
@@ -235,7 +258,7 @@ sealed class IconCornerShape {
             override val endY = 1f
         }
 
-        object BottomLeft : Position() {
+        data object BottomLeft : Position() {
 
             override val startX = 1f
             override val startY = 1f

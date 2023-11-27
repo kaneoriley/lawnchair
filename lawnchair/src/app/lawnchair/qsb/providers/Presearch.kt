@@ -4,7 +4,7 @@ import android.content.Intent
 import app.lawnchair.qsb.ThemingMethod
 import com.android.launcher3.R
 
-object Presearch : QsbSearchProvider(
+data object Presearch : QsbSearchProvider(
     id = "presearch",
     name = R.string.search_provider_presearch,
     icon = R.drawable.ic_presearch,
@@ -13,12 +13,11 @@ object Presearch : QsbSearchProvider(
     packageName = "com.presearch",
     className = "org.chromium.chrome.browser.TextSearchActivity",
     supportVoiceIntent = true,
-    website = "https://presearch.com/"
+    website = "https://presearch.com/",
 ) {
 
     override fun handleCreateVoiceIntent(): Intent =
         Intent(action)
             .addFlags(INTENT_FLAGS)
             .setClassName(packageName, "org.chromium.chrome.browser.VoiceSearchActivity")
-
 }
