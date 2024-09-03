@@ -956,6 +956,10 @@ public class LoaderTask implements Runnable {
             // Create the ApplicationInfos
             for (int i = 0; i < apps.size(); i++) {
                 LauncherActivityInfo app = apps.get(i);
+                if (mApp.getContext().getPackageName().equals(app.getComponentName().getPackageName())) {
+                    // We don't want icons for the bloody launcher itself.
+                    continue;
+                }
                 AppInfo appInfo = new AppInfo(app, user, quietMode);
 
                 iconRequestInfos.add(new IconRequestInfo<>(
@@ -1002,6 +1006,10 @@ public class LoaderTask implements Runnable {
                         "android.permission.MODIFY_QUIET_MODE") == PackageManager.PERMISSION_GRANTED);
 
         mBgAllAppsList.getAndResetChangeFlag();
+
+        // Lennox addition, force add all apps once the list is fully loaded.
+        app.lawnchair.allapps.AddAllAppsToHomescreenKt.addAllAppsToHomeScreen(mApp.getLauncher(), true);
+
         return allActivityList;
     }
 

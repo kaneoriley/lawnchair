@@ -64,14 +64,6 @@ fun HomeScreenPreferences(
     ) {
         val lockHomeScreenAdapter = prefs2.lockHomeScreen.getAdapter()
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
-            val addIconToHomeAdapter = prefs.addIconToHome.getAdapter()
-            SwitchPreference(
-                checked = !lockHomeScreenAdapter.state.value && addIconToHomeAdapter.state.value,
-                onCheckedChange = addIconToHomeAdapter::onChange,
-                label = stringResource(id = R.string.auto_add_shortcuts_label),
-                description = if (lockHomeScreenAdapter.state.value) stringResource(id = R.string.home_screen_locked) else null,
-                enabled = lockHomeScreenAdapter.state.value.not(),
-            )
             GestureHandlerPreference(
                 adapter = prefs2.doubleTapGestureHandler.getAdapter(),
                 label = stringResource(id = R.string.gesture_double_tap),
@@ -117,11 +109,6 @@ fun HomeScreenPreferences(
                 subtitle = stringResource(id = R.string.x_by_y, columns, rows),
             )
             DividerColumn {
-                SwitchPreference(
-                    adapter = lockHomeScreenAdapter,
-                    label = stringResource(id = R.string.home_screen_lock),
-                    description = stringResource(id = R.string.home_screen_lock_description),
-                )
                 SwitchPreference(
                     adapter = prefs2.enableDotPagination.getAdapter(),
                     label = stringResource(id = R.string.show_dot_pagination_label),

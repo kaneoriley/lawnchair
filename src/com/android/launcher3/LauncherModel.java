@@ -458,6 +458,10 @@ public class LauncherModel extends LauncherApps.Callback implements InstallSessi
                     if (FeatureFlags.CHANGE_MODEL_DELEGATE_LOADING_ORDER.get()) {
                         mModelDelegate.bindAllModelExtras(callbacksList);
                     }
+
+                    // Lennox addition, force add all apps once the list is fully loaded.
+                    app.lawnchair.allapps.AddAllAppsToHomescreenKt.addAllAppsToHomeScreen(mApp.getLauncher(), true);
+
                     return true;
                 } else {
                     stopLoader();
@@ -757,5 +761,10 @@ public class LauncherModel extends LauncherApps.Callback implements InstallSessi
      */
     public int getLastLoadId() {
         return mLastLoadId;
+    }
+
+    // Lennox addition, hacky but less maintenance effort
+    public AllAppsList getAllAppsList() {
+        return mBgAllAppsList;
     }
 }

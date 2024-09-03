@@ -52,6 +52,7 @@ import com.android.launcher3.BuildConfig
 import com.android.launcher3.R
 
 private enum class Role(val descriptionResId: Int) {
+    Lennox(descriptionResId = R.string.lennox_role),
     Development(descriptionResId = R.string.development),
     DevOps(descriptionResId = R.string.devops),
     QuickSwitchMaintenance(descriptionResId = R.string.quickswitch_maintenance),
@@ -73,6 +74,12 @@ private data class Link(
 )
 
 private val product = listOf(
+    TeamMember(
+        name = "Kane O'Riley",
+        role = Role.Lennox,
+        photoUrl = "https://avatars.githubusercontent.com/u/6470279",
+        socialUrl = "https://kaneoriley.com/",
+    ),
     TeamMember(
         name = "Amogh Lele",
         role = Role.Development,
@@ -242,7 +249,7 @@ fun About(
                 modifier = Modifier.combinedClickable(
                     onClick = {},
                     onLongClick = {
-                        val commitUrl = "https://github.com/LawnchairLauncher/lawnchair/commit/${BuildConfig.COMMIT_HASH}"
+                        val commitUrl = "https://github.com/kaneoriley/lawnchair/commit/${BuildConfig.COMMIT_HASH}"
                         context.startActivity(Intent(Intent.ACTION_VIEW, commitUrl.toUri()))
                     },
                 ),

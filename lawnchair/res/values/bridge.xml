@@ -18,5 +18,5 @@
 <resources>
     <integer name="bridge_signature_hash">0xB662CC2F</integer>
     <string name="bridge_version" translatable="false">v3</string>
-    <integer name="lawnfeed_signature_hash">0x60E8FB7D</integer>
+    <integer name="swagfeed_signature_hash">0x53B50C78</integer>
 </resources>

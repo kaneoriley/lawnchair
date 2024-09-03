@@ -78,6 +78,7 @@ import com.android.launcher3.Utilities;
 import com.android.app.animation.Interpolators;
 import com.android.launcher3.accessibility.AccessibleDragListenerAdapter;
 import com.android.launcher3.accessibility.WorkspaceAccessibilityHelper;
+import com.android.launcher3.allapps.AllAppsRecyclerView;
 import com.android.launcher3.anim.PendingAnimation;
 import com.android.launcher3.celllayout.CellLayoutLayoutParams;
 import com.android.launcher3.celllayout.CellPosMapper;
@@ -1858,8 +1859,13 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
             }
         }
 
+        if (child.getParent() instanceof AllAppsRecyclerView) {
+            // Don't allow dragging in the app drawer.
+            return null;
+        }
+
         boolean lockHomeScreen = PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getLockHomeScreen());
-        if (lockHomeScreen) {
+        if (lockHomeScreen || child.getParent() instanceof AllAppsRecyclerView) {
             child.setVisibility(View.VISIBLE);
 
             if (dragOptions.preDragCondition != null) {

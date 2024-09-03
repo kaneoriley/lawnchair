@@ -40,7 +40,7 @@ class FeedBridge(private val context: Context) {
     private val bridgePackages by lazy {
         listOf(
             PixelBridgeInfo("com.google.android.apps.nexuslauncher", R.integer.bridge_signature_hash),
-            BridgeInfo("app.lawnchair.lawnfeed", R.integer.lawnfeed_signature_hash),
+            BridgeInfo("me.oriley.swagfeed", R.integer.swagfeed_signature_hash),
         )
     }
 

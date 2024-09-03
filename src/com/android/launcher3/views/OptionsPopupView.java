@@ -210,13 +210,6 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
         boolean showEditMode = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEditHomeScreenButtonOnPopUp());
 
         ArrayList<OptionItem> options = new ArrayList<>();
-        if (showLockToggle) {
-            options.add(new OptionItem(launcher,
-                    lockHomeScreen ? R.string.home_screen_unlock : R.string.home_screen_lock,
-                    lockHomeScreen ? R.drawable.ic_lock_open : R.drawable.ic_lock,
-                    IGNORE,
-                    OptionsPopupView::toggleHomeScreenLock));
-        }
         if (showSystemSettings) {
             options.add(new OptionItem(launcher,
                     R.string.system_settings,

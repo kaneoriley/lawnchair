@@ -1327,4 +1327,10 @@ public class QuickstepLauncher extends Launcher {
         }
         return super.onCreateView(parent, name, context, attrs);
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        app.lawnchair.allapps.AddAllAppsToHomescreenKt.addAllAppsToHomeScreen(this, false);
+    }
 }
